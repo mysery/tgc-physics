@@ -41,8 +41,7 @@ using AlumnoEjemplos.Piguyis.Body;
 namespace AlumnoEjemplos.Piguyis.Box2DLitePort
 {
     /// <summary>
-    /// Allows arbiters to be stored in a dictionary
-    ///  - provides an identifier for an arbiter.
+    /// Buscar mejor implementacion en el futuro para manjar los arbritros.
     /// </summary>
     public class ArbiterKey : IEqualityComparer<ArbiterKey>
     {
@@ -81,13 +80,11 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             return GetHashCode(this);
         }
 
-        // TODO: put some unit tests in for this
         /// <summary>
         /// Determines whether the arbiters are equal
         /// </summary>
         public bool Equals(ArbiterKey x, ArbiterKey y)
         {
-            // TODO: null checks.
             if (object.ReferenceEquals(x.body1, y.body1)
                 && (object.ReferenceEquals(x.body2, y.body2)))
             {
@@ -108,8 +105,6 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         /// </summary>
         public int GetHashCode(ArbiterKey obj)
         {
-            // NOTE: can't use any of the sphere properties to determine their ID,
-            // as these will change while the contacts are in the dictionary
             unchecked
             {
                 return body1.GetHashCode() ^ body2.GetHashCode();
