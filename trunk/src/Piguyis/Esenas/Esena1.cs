@@ -16,18 +16,19 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             const float radius = 20.0f;
 
             // sphere 1.
-            RigidBody rigidBodyLeft = new RigidBody(new Vector3(-radius * 2, 0.0f, 0.0f),
+            BodyBuilder builderLeft = new BodyBuilder(new Vector3(-radius * 2, 0.0f, 0.0f),
                                                     new Vector3(), 1.0f);
-            BoundingSphere sphereLeft = new BoundingSphere(rigidBodyLeft, radius);
-            bodys.Add(rigidBodyLeft);            
-            rigidBodyLeft.FuersasInternas = new Fuerza(10.0f, 0.0f, 0.0f);
+            builderLeft.setBoundingSphere(radius);
+            builderLeft.setForces(10.0f, 0.0f, 0.0f);
+            bodys.Add(builderLeft.build());
 
             // sphere 2.
-            RigidBody rigidBodyRight = new RigidBody(new Vector3(radius * 2, 0.0f, 0.0f),
+            BodyBuilder builderRight = new BodyBuilder(new Vector3(radius * 2, 0.0f, 0.0f),
                                                     new Vector3(), 1.0f);
-            BoundingSphere sphereRight = new BoundingSphere(rigidBodyRight, radius);
-            bodys.Add(rigidBodyRight);
-            rigidBodyRight.FuersasInternas = new Fuerza(-10.0f, 0.0f, 0.0f);          
+            builderRight.setBoundingSphere(radius);
+            builderRight.setForces(-10.0f, 0.0f, 0.0f);
+            bodys.Add(builderRight.build());
+            
         }
     }
 }

@@ -43,17 +43,18 @@ namespace AlumnoEjemplos.Piguyis.Esenas
         }
         #endregion Implementacion IEsena
 
-        protected BoundingSphere AddBody(Density density, Vector3 initialLocation, Vector3 initialVelocity, float radius)
+        protected RigidBody AddBody(Density density, Vector3 initialLocation, Vector3 initialVelocity, float radius)
         {
             float densityValue = (int)density;
             
             float mass = densityValue * (1.33333f) * FastMath.PI * (radius * radius * radius);
 
             // sphere 2.
-            RigidBody rigidBody = new RigidBody(initialLocation, initialVelocity, mass);
-            BoundingSphere sphere = new BoundingSphere(rigidBody, radius);
-            bodys.Add(rigidBody);
-            return sphere;
+            BodyBuilder builder = new BodyBuilder(initialLocation, initialVelocity, mass);
+            builder.setBoundingSphere(radius);
+            RigidBody result = builder.build();
+            bodys.Add(result);
+            return result;
         }
             
         public enum Density

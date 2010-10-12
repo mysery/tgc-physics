@@ -25,16 +25,16 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                 {
                     for (int z = 0; z < numberOfSpheresPerBaseLayer - y; ++z)
                     {
-                        RigidBody rigidBody = new RigidBody(
+                        BodyBuilder builder = new BodyBuilder(
                                                             new Vector3((radius * 2f * x) + (y * radius),
                                                                         initialYLocation + (separationDistance * y),
                                                                         zOffset + (radius * 2 * z) + (y * radius)),
                                                             new Vector3(), 
                                                             y != 0 ? 1.0f : float.PositiveInfinity);
-                        BoundingSphere sphere = new BoundingSphere(rigidBody, radius);
-                        bodys.Add(rigidBody);
+                        builder.setBoundingSphere(radius);
                         if (y != 0)
-                            rigidBody.FuersasInternas = new Fuerza(0.0f, -1.0f, 0.0f);
+                            builder.setForces(0.0f, -1.0f, 0.0f);
+                        bodys.Add(builder.build());
                         }                        
                     }
                 }

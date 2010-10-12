@@ -27,35 +27,31 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
         /// <param name="radius">The sphere's radius</param>
         public BoundingSphere(RigidBody rigidBody, float radius)
         {
-            if (rigidBody == null)
-            {
-                throw new ArgumentNullException("rigidBody");
-            }
             if (radius < 0.0)
             {
                 throw new ArgumentException("Radius should not be negative", "radius");
-            }
-            this.rigidBody = rigidBody;            
+            }            
             sphare = new TgcBoundingSphere(rigidBody.Location, radius);
-            //TODO proximo refacor
-            this.rigidBody.BoundingVolume = this;
+            //TODO proximo refacor con builder.
+            rigidBody.BoundingVolume = this;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="radius">The sphere's radius</param>
+        public BoundingSphere(float radius)
+        {
+            if (radius < 0.0f)
+            {
+                throw new ArgumentException("Radius should not be negative", "radius");
+            }
+            sphare = new TgcBoundingSphere(new Vector3(), radius);
         }
 
         #endregion Object Lifetime
 
 		#region get y sets
-
-		/// <summary>
-		/// Returns the EulerRigidBody instance
-		///  that contains details on the object's physical state.
-		/// </summary>
-        public RigidBody RigidBody
-		{
-			get
-			{
-				return this.rigidBody;
-			}
-		}
 
         /// <summary>
         /// Returns the Sphere's radius.
@@ -95,7 +91,6 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
 
 		#region Member Variables
 
-        private readonly RigidBody rigidBody;
         private TgcBoundingSphere sphare;
 
 		#endregion Member Variables
