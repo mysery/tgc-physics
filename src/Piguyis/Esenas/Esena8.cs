@@ -34,16 +34,16 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             for (int x = 0; x < numberSpheresPerSide; ++x)
             {
                 for (int z = 0; z < numberSpheresPerSide; ++z)
-                {                    
-                    RigidBody rigidBody = new RigidBody(
+                {
+                    BodyBuilder builder = new BodyBuilder(
                                                         new Vector3(initialX + (x * ((radius * 2) + separationBetweenSpheres)),
                                                                     yLocation + random.Next(MAX_VALUE_RANDOM),
                                                                     initialZ + (z * ((radius * 2) + separationBetweenSpheres))),
                                                         new Vector3(), 
                                                         1.0f);
-                    BoundingSphere sphereLeft = new BoundingSphere(rigidBody, radius);
-                    bodys.Add(rigidBody);
-                    rigidBody.FuersasInternas = new Fuerza(0.0f, -1.0f, 0.0f);
+                    builder.setBoundingSphere(radius);
+                    builder.setForces(0.0f, -1.0f, 0.0f);
+                    bodys.Add(builder.build());
                 }
             }
 
@@ -53,14 +53,13 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
             float radiusBigYLocation = 10f;
             float radiusBig = 150.0f;
-            RigidBody bigBodySphere = new RigidBody(new Vector3(  xCentre,
+            BodyBuilder bigBuilder = new BodyBuilder(new Vector3(xCentre,
                                                                     -radiusBig + radiusBigYLocation,
                                                                     zCentre),
                                                         new Vector3(),
                                                         float.PositiveInfinity);
-            BoundingSphere bigBoundingSphere = new BoundingSphere(bigBodySphere, radiusBig);
-            bodys.Add(bigBodySphere);
-
+            bigBuilder.setBoundingSphere(radiusBig);
+            bodys.Add(bigBuilder.build());
             #endregion
         }
     }

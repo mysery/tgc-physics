@@ -31,15 +31,15 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             {
                 for (int z = 0; z < numberSpheresPerSide; ++z)
                 {
-                    RigidBody rigidBody = new RigidBody(
+                    BodyBuilder builder = new BodyBuilder(
                                                         new Vector3(initialX + (x * ((radius * 2) + separationBetweenSpheres)),
                                                                     yLocation,
                                                                     initialZ + (z * ((radius * 2) + separationBetweenSpheres))),
                                                         new Vector3(),
                                                         1.0f);
-                    BoundingSphere sphereLeft = new BoundingSphere(rigidBody, radius);
-                    bodys.Add(rigidBody);
-                    rigidBody.FuersasInternas = new Fuerza(0.0f, -5.0f, 0.0f);
+                    builder.setBoundingSphere(radius);
+                    builder.setForces(0.0f, -5.0f, 0.0f);
+                    bodys.Add(builder.build());
                 }
             }
 
@@ -63,15 +63,15 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                 yLocation -= separationBetweenSpheres;
                 for (int z = 0; z < numberSpheresPerSide; ++z)
                 {
-                    RigidBody rigidBody = new RigidBody(
+                    BodyBuilder builder = new BodyBuilder(
                                                         new Vector3(initialX + (x * ((radius * 2) + separationBetweenSpheres)),
                                                                     yLocation,
                                                                     initialZ + (z * ((radius * 2) + separationBetweenSpheres))),
                                                         new Vector3(),
                                                         float.PositiveInfinity);
-                    BoundingSphere sphereLeft = new BoundingSphere(rigidBody, radius);
-                    bodys.Add(rigidBody);
-                    rigidBody.FuersasInternas = new Fuerza(0.0f, -1.0f, 0.0f);
+                    builder.setBoundingSphere(radius);
+                    builder.setForces(0.0f, -1.0f, 0.0f);
+                    bodys.Add(builder.build());
                 }
             }
 
