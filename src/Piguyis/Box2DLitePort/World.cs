@@ -62,7 +62,21 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             this.rigidBodys = rigidBodys;
         }
 
+        /// <summary>
+        /// Constructs an instance of <see cref="World" />
+        /// </summary>
+        /// <param name="spheres"></param>
+        public World()
+        {
+            this.rigidBodys = new List<RigidBody>();
+        }
+
         #endregion Object Lifetime
+
+        public void addBody(RigidBody body)
+        {
+            this.rigidBodys.Add(body);
+        }
 
         /// <summary>
         /// Comienzo caliente.
