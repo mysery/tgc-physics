@@ -48,8 +48,7 @@ namespace AlumnoEjemplos.Piguyis
         }
 
         private IEsena e = new Esena2();
-        private TgcArrow a;
-
+        
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
         /// Escribir aquí todo el código de inicialización: cargar modelos, texturas, modifiers, uservars, etc.
@@ -58,7 +57,6 @@ namespace AlumnoEjemplos.Piguyis
         public override void init()
         {
             e.initEsena();
-            a = TgcArrow.fromExtremes(new Vector3(), new Vector3(5f, 5f, 5f), Color.Azure);
             ///////////////CONFIGURAR CAMARA PRIMERA PERSONA//////////////////
             //Camara en primera persona, tipo videojuego FPS
             //Solo puede haber una camara habilitada a la vez. Al habilitar la camara FPS se deshabilita la camara rotacional
@@ -67,7 +65,7 @@ namespace AlumnoEjemplos.Piguyis
             GuiController.Instance.FpsCamera.JumpSpeed = 100f;
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -200.0f), new Vector3(0.0f, -30.0f, 100.0f));
 
-            GuiController.Instance.Modifiers.addVertex3f("valorVertice", new Vector3(-50, -50, -50), new Vector3(50, 50, 50), new Vector3(5f, 5f, 5f));
+            //GuiController.Instance.Modifiers.addVertex3f("valorVertice", new Vector3(-50, -50, -50), new Vector3(50, 50, 50), new Vector3(5f, 5f, 5f));
             //Loggear por consola del Framework
             //GuiController.Instance.Logger.log(elemento);
         }
@@ -82,12 +80,7 @@ namespace AlumnoEjemplos.Piguyis
         {
             e.render(elapsedTime);
 
-            Vector3 puntoend = (Vector3)GuiController.Instance.Modifiers.getValue("valorVertice");
-
-            if (!puntoend.Equals(a.PEnd))
-                a.PEnd = puntoend;
-
-            a.render();
+           // Vector3 puntoend = (Vector3)GuiController.Instance.Modifiers.getValue("valorVertice");
         }
 
         /// <summary>
@@ -96,7 +89,6 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void close()
         {
-            a.dispose();
             e.closeEsena();
         }
     }
