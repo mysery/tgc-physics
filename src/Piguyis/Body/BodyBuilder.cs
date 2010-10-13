@@ -17,11 +17,13 @@ namespace AlumnoEjemplos.Piguyis.Body
         private Fuerza forces;
         private const float DEFAULT_MASS = 1f;
         private const float DEFAULT_RESTITUTION = 1f;
+        private const float DEFAULT_RADIUS = 5f;
 
         public BodyBuilder()
         {
             this.position = new Vector3();
             this.velocity = new Vector3();
+            this.bounding = new BoundingSphere(DEFAULT_RADIUS);
             this.mass = DEFAULT_MASS;
         }
 

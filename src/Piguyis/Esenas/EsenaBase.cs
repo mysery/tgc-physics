@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
         protected abstract void createBodys();
 
-        public void render(float elapsedTime)
+        public virtual void render(float elapsedTime)
         {
             this.world.Step(elapsedTime);
 
