@@ -91,5 +91,22 @@ namespace AlumnoEjemplos.PiguYis.Matematica
             return Sin(radians + PI / 2); // Cos(x) = Sin(x + PI / 2)
         }
 
+        /// <summary>
+        /// Optimizacion sacada de http://www.koders.com/java/fidDA85948E47E0F011F9CC1F7CBF3A3BB04CA0D722.aspx
+        /// </summary>
+        /// <param name="fValue"></param>
+        /// <returns></returns>
+        public static float Acos(float fValue)
+        {
+            if (-1.0f < fValue)
+            {
+                if (fValue < 1.0f)
+                    return (float)Math.Acos(fValue);
+
+                return 0.0f;
+            }
+
+            return PI;
+        }
     }    
 }

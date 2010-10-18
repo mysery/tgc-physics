@@ -5,10 +5,12 @@ using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Fisica;
 using TgcViewer.Utils.TgcGeometry;
 using AlumnoEjemplos.Piguyis.Colisiones;
+using TgcViewer.Utils.TgcSceneLoader;
+using System.Drawing;
 
 namespace AlumnoEjemplos.Piguyis.Body
 {
-    public class RigidBody
+    public class RigidBody : IRenderObject
     {
         
         #region Variables
@@ -19,6 +21,7 @@ namespace AlumnoEjemplos.Piguyis.Body
         private Fuerza fuersasExternas = new Fuerza();
         private Vector3 location = new Vector3();
         private Vector3 velocity = new Vector3();
+        private TgcArrow debugVelocity;
         private BoundingVolume boundingVolume = new BoundingNullObject();
         /// <summary>
         /// The biased velocity (velocidad parcial) - see the Box2D Port classes.
@@ -45,6 +48,8 @@ namespace AlumnoEjemplos.Piguyis.Body
             this.location = location;
             this.velocity = velocity;
             this.mass = masa;
+            this.debugVelocity = TgcArrow.fromDirection(location, velocity, Color.Green, Color.Green, 0.1f, new Vector2(0.6f, 1.2f));
+            
         }
 
         #endregion Constructor
@@ -73,6 +78,7 @@ namespace AlumnoEjemplos.Piguyis.Body
             {
                 this.location = value;
                 boundingVolume.setPosition(this.location);
+                this.debugVelocity.PStart = this.location;
             }
         }
 
@@ -88,6 +94,7 @@ namespace AlumnoEjemplos.Piguyis.Body
             set
             {
                 this.velocity = value;
+                this.debugVelocity.PEnd = this.location + this.velocity;
             }
         }
 
@@ -102,7 +109,7 @@ namespace AlumnoEjemplos.Piguyis.Body
                 {
                     return new Vector3();
                 }//+ fuersasExternas TODO fuerzas externas!!!
-                return (fuersasInternas * (1.0 / mass)).Vector;
+                return (fuersasInternas * this.inverseMass).Vector;
             }
         }
 
@@ -208,5 +215,21 @@ namespace AlumnoEjemplos.Piguyis.Body
         }
 
         #endregion Public Methods
+        
+        #region IRenderObject Members
+
+        public void render()
+        {
+            this.BoundingVolume.render();
+            this.debugVelocity.render();
+        }
+
+        public void dispose()
+        {
+            this.BoundingVolume.dispose();
+            this.debugVelocity.dispose();
+        }
+
+        #endregion
     }
 }

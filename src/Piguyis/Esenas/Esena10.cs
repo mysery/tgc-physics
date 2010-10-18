@@ -28,24 +28,17 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             #endregion
         }
         private Random random = new Random();
-        private bool uncheck = true;
         public override void render(float elapsedTime)
         {
-            Boolean newBody = (Boolean)GuiController.Instance.Modifiers.getValue("addBody");
+            Boolean newBody = GuiController.Instance.D3dInput.buttonUp(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_RIGHT);
             if (newBody)
             {
-                if (uncheck)
-                {
-                    BodyBuilder builder = new BodyBuilder();
-                    builder.setPosition(new Vector3((float)(50f*Math.Pow(-1,random.Next(1,3))), 
-                                                    (float)(random.NextDouble() * 50f) + 10f,
-                                                    (float)(50f * Math.Pow(-1,random.Next(1, 3)))));
-                    builder.setForces(0f, (float)random.NextDouble() * -10f, 0f);
-                    this.world.addBody(builder.build());
-                    uncheck = false;
-                }
-            } else {
-                uncheck = true;
+                BodyBuilder builder = new BodyBuilder();
+                builder.setPosition(new Vector3((float)(50f*Math.Pow(-1,random.Next(1,3))), 
+                                                (float)(random.NextDouble() * 50f) + 10f,
+                                                (float)(50f * Math.Pow(-1,random.Next(1, 3)))));
+                builder.setForces(0f, (float)random.NextDouble() * -10f, 0f);
+                this.world.addBody(builder.build());
             }
 
             base.render(elapsedTime);
