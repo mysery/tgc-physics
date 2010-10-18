@@ -48,6 +48,8 @@ namespace AlumnoEjemplos.Piguyis
         }
 
         private IEsena e = new Esena2();
+        private TgcArrow a;
+
         
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -66,6 +68,7 @@ namespace AlumnoEjemplos.Piguyis
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -200.0f), new Vector3(0.0f, -30.0f, 100.0f));
 
             //GuiController.Instance.Modifiers.addVertex3f("valorVertice", new Vector3(-50, -50, -50), new Vector3(50, 50, 50), new Vector3(5f, 5f, 5f));
+
             //Loggear por consola del Framework
             //GuiController.Instance.Logger.log(elemento);
         }
@@ -79,8 +82,6 @@ namespace AlumnoEjemplos.Piguyis
         public override void render(float elapsedTime)
         {
             e.render(elapsedTime);
-
-           // Vector3 puntoend = (Vector3)GuiController.Instance.Modifiers.getValue("valorVertice");
         }
 
         /// <summary>

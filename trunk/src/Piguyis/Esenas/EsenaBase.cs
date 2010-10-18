@@ -30,7 +30,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
             foreach (RigidBody body in bodys)
             {
-                body.BoundingVolume.render();
+                body.render();
             }
         }
 
@@ -38,7 +38,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
         {
             foreach (RigidBody body in bodys)
             {
-                body.BoundingVolume.dispose();
+                body.dispose();
             }
         }
         #endregion Implementacion IEsena

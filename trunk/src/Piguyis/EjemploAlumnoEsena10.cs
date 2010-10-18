@@ -44,7 +44,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getDescription()
         {
-            return "Una gran esfera masa infinita, y se le agrega cuerpos";
+            return "Una gran esfera masa infinita, y se le agrega cuerpos (clic derecho) pequeños aleatoriamente";
         }
 
         private IEsena e = new Esena10();        
@@ -66,7 +66,6 @@ namespace AlumnoEjemplos.Piguyis
             GuiController.Instance.FpsCamera.JumpSpeed = 100f;
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
 
-            GuiController.Instance.Modifiers.addBoolean("addBody", "addBody", false);
             //Loggear por consola del Framework
             //GuiController.Instance.Logger.log(elemento);
         }

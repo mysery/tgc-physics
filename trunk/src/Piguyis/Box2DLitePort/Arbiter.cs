@@ -54,7 +54,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
 
         //TODO: variables del mundo no del arbritro....
         private bool warmStarting = false; //ok, el mundo se lo pasa al arbritro.
-        //private float friction = 0.0;
+        //private float friction = 0.0; todo esto tendria que venir de los cuerpos. (no implementado)
 
         /// <summary>
         /// El Contacto de los dos cuerpos que manejara este arbritro.
