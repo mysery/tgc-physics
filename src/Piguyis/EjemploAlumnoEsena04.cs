@@ -20,7 +20,7 @@ namespace AlumnoEjemplos.Piguyis
     /// <summary>
     /// Ejemplo del alumno
     /// </summary>
-    public class EjemploAlumnoEsena8 : TgcExample
+    public class EjemploAlumnoEsena04 : TgcExample
     {
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -36,7 +36,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getName()
         {
-            return "Esena8 - Motor Fisica";
+            return "Escena04 - Motor Fisica";
         }
 
         /// <summary>
@@ -44,10 +44,10 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getDescription()
         {
-            return "Muchas esferas desalineadas colisionan contra otra inmovil (masa infinita).";
+            return "Colicion de objetos en fila que propaga el choque y otros que colicionan en distintos angulos.";
         }
 
-        private IEsena e = new Esena8();        
+        private IEsena e = new Esena4();        
 
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -57,18 +57,6 @@ namespace AlumnoEjemplos.Piguyis
         public override void init()
         {
             e.initEsena();
-            
-            ///////////////CONFIGURAR CAMARA PRIMERA PERSONA//////////////////
-            //Camara en primera persona, tipo videojuego FPS
-            //Solo puede haber una camara habilitada a la vez. Al habilitar la camara FPS se deshabilita la camara rotacional
-            GuiController.Instance.FpsCamera.Enable = true;
-            GuiController.Instance.FpsCamera.MovementSpeed = 100f;
-            GuiController.Instance.FpsCamera.JumpSpeed = 100f;
-            GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
-
-            //GuiController.Instance.Modifiers.addVertex3f("valorVertice", new Vector3(-50, -50, -50), new Vector3(50, 50, 50), new Vector3(5f, 5f, 5f));
-            //Loggear por consola del Framework
-            //GuiController.Instance.Logger.log(elemento);
         }
 
         /// <summary>
@@ -79,7 +67,7 @@ namespace AlumnoEjemplos.Piguyis
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            e.render(elapsedTime*5f);            
+            e.render(elapsedTime * 5f);            
         }
 
         /// <summary>

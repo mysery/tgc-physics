@@ -48,5 +48,11 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
             base.render(elapsedTime);
         }
+
+        public override void initEsena()
+        {
+            base.initEsena();
+            GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
+        }
     }
 }

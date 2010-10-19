@@ -36,7 +36,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getName()
         {
-            return "Esena10 - Motor Fisica";
+            return "Escena10 - Motor Fisica";
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getDescription()
         {
-            return "Una gran esfera masa infinita, y se le agrega cuerpos (clic derecho) pequeños aleatoriamente";
+            return "Una gran esfera masa infinita, y se le agrega cuerpos pequeños con clic derecho";
         }
 
         private IEsena e = new Esena10();        
@@ -57,17 +57,6 @@ namespace AlumnoEjemplos.Piguyis
         public override void init()
         {
             e.initEsena();
-            
-            ///////////////CONFIGURAR CAMARA PRIMERA PERSONA//////////////////
-            //Camara en primera persona, tipo videojuego FPS
-            //Solo puede haber una camara habilitada a la vez. Al habilitar la camara FPS se deshabilita la camara rotacional
-            GuiController.Instance.FpsCamera.Enable = true;
-            GuiController.Instance.FpsCamera.MovementSpeed = 100f;
-            GuiController.Instance.FpsCamera.JumpSpeed = 100f;
-            GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
-
-            //Loggear por consola del Framework
-            //GuiController.Instance.Logger.log(elemento);
         }
 
         /// <summary>

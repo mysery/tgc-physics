@@ -6,6 +6,7 @@ using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Body;
 using AlumnoEjemplos.Piguyis.Fisica;
+using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
@@ -61,6 +62,12 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             bigBuilder.setBoundingSphere(radiusBig);
             bodys.Add(bigBuilder.build());
             #endregion
+        }
+
+        public override void initEsena()
+        {
+            base.initEsena();
+            GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
         }
     }
 }
