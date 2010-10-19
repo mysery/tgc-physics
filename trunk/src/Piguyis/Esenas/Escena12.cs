@@ -7,16 +7,16 @@ using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Body;
 using AlumnoEjemplos.Piguyis.Fisica;
 using TgcViewer;
-using AlumnoEjemplos.PiguYis.Matematica;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
-    public class Escena11 : EscenaBase
+    public class Escena12 : EscenaBase
     {
         public override void render(float elapsedTime)
         {
             base.render(elapsedTime * 2f);
         }
+
         protected override void createBodys()
         {
             const float radius = 2.0f;
@@ -37,9 +37,11 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                                                                         zOffset + (radius * 2 * z) + (y * radius)),
                                                             new Vector3(),
                                                             y != 0 ? 1.0f : float.PositiveInfinity);
-                        builder.setBoundingSphere(radius);
+                        builder.setRestitution(0.5f);
                         if (y != 0)
                             builder.setForces(0.0f, -1.0f, 0.0f);
+
+                        builder.setBoundingSphere(radius);
                         bodys.Add(builder.build());
                     }
                 }
@@ -54,12 +56,12 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
         public override string getTitle()
         {
-            return "Escena11 - Motor Fisica";
+            return "Escena12 - Motor Fisica";
         }
 
         public override string getDescription()
         {
-            return "Muchas esferas apiladas en forma de piramide caen sobre esferas inmoviles. con restitucion 1.0";
+            return "Muchas esferas apiladas en forma de piramide caen sobre esferas inmoviles. con restitucion 0.5";
         }
     }
 }

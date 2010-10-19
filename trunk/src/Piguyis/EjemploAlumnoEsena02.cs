@@ -13,7 +13,6 @@ using TgcViewer.Utils.TgcSkeletalAnimation;
 using TgcViewer.Utils.Terrain;
 using TgcViewer.Utils.Fog;
 using AlumnoEjemplos.Piguyis.Esenas;
-using AlumnoEjemplos.Piguyis.TGCView;
 
 namespace AlumnoEjemplos.Piguyis
 {
@@ -36,7 +35,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getName()
         {
-            return "Escena02 - Motor Fisica";
+            return e.getTitle();
         }
 
         /// <summary>
@@ -44,11 +43,11 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getDescription()
         {
-            return "Dos esferas con aceleracion constante (fuerza constante pero DISTINTA) de DISTINTA masa chocan linealmente y rebotan segun el impulso";
+            return e.getDescription();
         }
 
         private IEscena e = new Escena02();
-                
+
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
         /// Escribir aquí todo el código de inicialización: cargar modelos, texturas, modifiers, uservars, etc.

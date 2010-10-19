@@ -13,7 +13,6 @@ using TgcViewer.Utils.TgcSkeletalAnimation;
 using TgcViewer.Utils.Terrain;
 using TgcViewer.Utils.Fog;
 using AlumnoEjemplos.Piguyis.Esenas;
-using AlumnoEjemplos.Piguyis.TGCView;
 
 namespace AlumnoEjemplos.Piguyis
 {
@@ -36,7 +35,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getName()
         {
-            return "Escena08 - Motor Fisica";
+            return e.getTitle();
         }
 
         /// <summary>
@@ -44,10 +43,10 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getDescription()
         {
-            return "Muchas esferas desalineadas colisionan contra otra inmovil (masa infinita).";
+            return e.getDescription();
         }
 
-        private IEscena e = new Escena08();        
+        private IEscena e = new Escena08();
 
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -67,7 +66,7 @@ namespace AlumnoEjemplos.Piguyis
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            e.render(elapsedTime*5f);            
+            e.render(elapsedTime);
         }
 
         /// <summary>
@@ -75,7 +74,7 @@ namespace AlumnoEjemplos.Piguyis
         /// Hacer dispose() de todos los objetos creados.
         /// </summary>
         public override void close()
-        {            
+        {
             e.closeEscena();
         }
     }

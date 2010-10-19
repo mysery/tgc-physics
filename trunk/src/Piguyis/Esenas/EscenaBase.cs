@@ -16,6 +16,10 @@ namespace AlumnoEjemplos.Piguyis.Esenas
         protected World world = null;
 
         #region Implementacion IEsena
+        
+        public abstract String getTitle();
+        public abstract String getDescription();
+        
         public virtual void initEscena()
         {
             bodys = new List<RigidBody>();

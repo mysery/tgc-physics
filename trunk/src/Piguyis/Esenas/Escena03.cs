@@ -11,6 +11,10 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 {
     public class Escena03 : EscenaBase
     {
+        public override void render(float elapsedTime)
+        {
+            base.render(elapsedTime*4f);
+        }
         protected override void createBodys()
         {
             float locationY = -78.0f;
@@ -45,6 +49,16 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             locationY = 30.0f;
             this.AddBody(Density.High, new Vector3(initialMovingLocationX, locationY, 0f), new Vector3(initialMovingVelocityX,0f, 0f), radius);
             this.AddBody(Density.Low, new Vector3(initialStationaryLocationX, locationY, 0f), new Vector3(), radius);
+        }
+
+        public override string getTitle()
+        {
+            return "Escena03 - Motor Fisica";
+        }
+
+        public override string getDescription()
+        {
+            return "Objetos que colicionan con diferentes masas, Choque linea contra objetos quietos.";
         }
     }
 }

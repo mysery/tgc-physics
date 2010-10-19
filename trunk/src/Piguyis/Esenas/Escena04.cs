@@ -13,7 +13,10 @@ namespace AlumnoEjemplos.Piguyis.Esenas
     public class Escena04 : EscenaBase
     {
         private const float zLocation = -40.0f;
-
+        public override void render(float elapsedTime)
+        {
+            base.render(elapsedTime * 4f);
+        }
         protected override void createBodys()
         {
             float locationY = -80.0f;
@@ -82,6 +85,16 @@ namespace AlumnoEjemplos.Piguyis.Esenas
         {
             base.initEscena();
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -250.0f), new Vector3(0.0f, -30.0f, 100.0f));
+        }
+
+        public override string getTitle()
+        {
+            return "Escena04 - Motor Fisica";
+        }
+
+        public override string getDescription()
+        {
+            return "Colicion de objetos en fila que propaga el choque y otros que colicionan en distintos angulos.";
         }
     }
 }

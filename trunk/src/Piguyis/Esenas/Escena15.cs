@@ -6,15 +6,14 @@ using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Body;
 using AlumnoEjemplos.Piguyis.Fisica;
-using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
-    public class Escena09 : EscenaBase
+    public class Escena15 : EscenaBase
     {
         public override string getTitle()
         {
-            return "Escena09 - Motor Fisica";
+            return "Escena15 - Motor Fisica";
         }
 
         public override string getDescription()

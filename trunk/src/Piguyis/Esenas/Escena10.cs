@@ -46,13 +46,23 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
             }
 
-            base.render(elapsedTime);
+            base.render(elapsedTime * 1.25f);
         }
 
         public override void initEscena()
         {
             base.initEscena();
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
+        }
+
+        public override string getTitle()
+        {
+            return "Escena10 - Motor Fisica";
+        }
+
+        public override string getDescription()
+        {
+            return "Una gran esfera inmovil. se le agregan esferas con CLIC DERECHO.";
         }
     }
 }
