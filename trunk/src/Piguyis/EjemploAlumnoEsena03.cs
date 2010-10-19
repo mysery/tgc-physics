@@ -47,7 +47,7 @@ namespace AlumnoEjemplos.Piguyis
             return "Objetos que colicionan con diferentes masas, Choque linea contra objetos quietos.";
         }
 
-        private IEsena e = new Esena3();        
+        private IEscena e = new Escena03();        
 
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -56,7 +56,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void init()
         {
-            e.initEsena();
+            e.initEscena();
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void close()
         {            
-            e.closeEsena();
+            e.closeEscena();
         }
     }
 }

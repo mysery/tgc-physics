@@ -10,7 +10,7 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
-    public class Esena8 : EsenaBase
+    public class Escena08 : EscenaBase
     {
         private const float zLocation = -40.0f;
 
@@ -64,9 +64,9 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             #endregion
         }
 
-        public override void initEsena()
+        public override void initEscena()
         {
-            base.initEsena();
+            base.initEscena();
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
         }
     }

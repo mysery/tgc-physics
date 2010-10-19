@@ -9,7 +9,7 @@ using AlumnoEjemplos.Piguyis.Fisica;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
-    public class Esena3 : EsenaBase
+    public class Escena03 : EscenaBase
     {
         protected override void createBodys()
         {

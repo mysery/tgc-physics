@@ -10,13 +10,13 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
-    public abstract class EsenaBase : IEsena
+    public abstract class EscenaBase : IEscena
     {
         protected List<RigidBody> bodys;
         protected World world = null;
 
         #region Implementacion IEsena
-        public virtual void initEsena()
+        public virtual void initEscena()
         {
             bodys = new List<RigidBody>();
             this.createBodys();
@@ -40,7 +40,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             }
         }
 
-        public virtual void closeEsena()
+        public virtual void closeEscena()
         {
             foreach (RigidBody body in bodys)
             {

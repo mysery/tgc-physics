@@ -47,7 +47,7 @@ namespace AlumnoEjemplos.Piguyis
             return "Muchas esferas alineadas colisionan contra otras inmoviles (masas infinitas) ubicadas en escalera.";
         }
 
-        private IEsena e = new Esena9();        
+        private IEscena e = new Escena09();        
 
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -56,7 +56,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void init()
         {
-            e.initEsena();
+            e.initEscena();
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void close()
         {            
-            e.closeEsena();
+            e.closeEscena();
         }
     }
 }

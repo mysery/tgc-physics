@@ -20,7 +20,7 @@ namespace AlumnoEjemplos.Piguyis
     /// <summary>
     /// Ejemplo del alumno
     /// </summary>
-    public class EjemploAlumnoEsena04 : TgcExample
+    public class EjemploAlumnoEsena11 : TgcExample
     {
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -36,7 +36,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getName()
         {
-            return "Escena04 - Motor Fisica";
+            return "Escena11 - Motor Fisica";
         }
 
         /// <summary>
@@ -44,10 +44,10 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getDescription()
         {
-            return "Colicion de objetos en fila que propaga el choque y otros que colicionan en distintos angulos.";
+            return "Muchas esferas (diferente indice de restitucion) alineadas colisionan contra otras inmoviles (masas infinitas) ubicadas en escalera.";
         }
 
-        private IEscena e = new Escena04();        
+        private IEscena e = new Escena11();        
 
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -67,7 +67,7 @@ namespace AlumnoEjemplos.Piguyis
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            e.render(elapsedTime * 5f);            
+            e.render(elapsedTime);            
         }
 
         /// <summary>

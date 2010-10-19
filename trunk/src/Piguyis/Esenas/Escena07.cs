@@ -10,7 +10,7 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
-    public class Esena7 : EsenaBase
+    public class Escena07 : EscenaBase
     {
         protected override void createBodys()
         {
@@ -43,9 +43,9 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             }
         }
 
-        public override void initEsena()
+        public override void initEscena()
         {
-            base.initEsena();
+            base.initEscena();
             GuiController.Instance.FpsCamera.setCamera(new Vector3(-50.0f, 25.0f, -100.0f), new Vector3(90.0f, -50.0f, 100.0f));
         }
     }
