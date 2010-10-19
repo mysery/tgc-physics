@@ -47,7 +47,7 @@ namespace AlumnoEjemplos.Piguyis
             return "Una gran esfera masa infinita, y se le agrega cuerpos pequeños con clic derecho";
         }
 
-        private IEsena e = new Esena10();        
+        private IEscena e = new Escena10();        
 
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -56,7 +56,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void init()
         {
-            e.initEsena();
+            e.initEscena();
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void close()
         {            
-            e.closeEsena();
+            e.closeEscena();
         }
     }
 }

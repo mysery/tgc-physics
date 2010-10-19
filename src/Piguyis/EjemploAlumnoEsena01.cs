@@ -46,7 +46,7 @@ namespace AlumnoEjemplos.Piguyis
             return "Dos esferas con aceleracion constante (fuerza constante e igual) de la misma masa chocan linealmente y rebotan segun el impulso";
         }
 
-        private IEsena e = new Esena1();
+        private IEscena e = new Escena01();
 
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -55,7 +55,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void init()
         {
-            e.initEsena();
+            e.initEscena();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void close()
         {
-            e.closeEsena();
+            e.closeEscena();
         }
     }
 }

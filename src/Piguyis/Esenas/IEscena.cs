@@ -4,10 +4,10 @@ using System.Text;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
-    interface IEsena
+    interface IEscena
     {
-        void initEsena();
+        void initEscena();
         void render(float elapsedTime);
-        void closeEsena();
+        void closeEscena();
     }
 }
