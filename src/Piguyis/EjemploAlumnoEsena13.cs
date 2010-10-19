@@ -19,7 +19,7 @@ namespace AlumnoEjemplos.Piguyis
     /// <summary>
     /// Ejemplo del alumno
     /// </summary>
-    public class EjemploAlumnoEsena10 : TgcExample
+    public class EjemploAlumnoEsena13 : TgcExample
     {
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -46,7 +46,7 @@ namespace AlumnoEjemplos.Piguyis
             return e.getDescription();
         }
 
-        private IEscena e = new Escena10();
+        private IEscena e = new Escena13();
 
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.

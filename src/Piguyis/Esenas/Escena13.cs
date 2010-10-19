@@ -10,24 +10,19 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
-    public class Escena07 : EscenaBase
+    public class Escena13 : EscenaBase
     {
-        private const float zLocation = -40.0f;
-        public override void render(float elapsedTime)
-        {
-            base.render(elapsedTime * 5f);
-        }
         protected override void createBodys()
         {
-            #region Spheres
+            #region Spheres en grilla
 
             // creo una grilla de cuerpos.
-            const int numberSpheresPerSide = 12;
-            const float radius = 5.0f;
-            const float separationBetweenSpheres = 2.0f;
+            int numberSpheresPerSide = 5;
+            float radius = 5f;
+            float separationBetweenSpheres = 2.0f;
 
-            const float xCentre = 0.0f;
-            const float zCentre = -120.0f;
+            float xCentre = 0.0f;
+            float zCentre = -120.0f;
             float yLocation = 30.0f;
 
             float initialX = xCentre - (((numberSpheresPerSide - 1) * ((radius * 2.0f) + separationBetweenSpheres)) / 2.0f) - (separationBetweenSpheres / 2.0f);
@@ -44,41 +39,58 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                                                         new Vector3(),
                                                         1.0f);
                     builder.setBoundingSphere(radius);
-                    builder.setForces(0.0f, -1.0f, 0.0f);
+                    builder.setForces(0.0f, -5.0f, 0.0f);
                     bodys.Add(builder.build());
                 }
             }
 
             #endregion
 
-            #region BigSphere
+            #region Spheres en escalera
 
-            float radiusBigYLocation = 10f; // the y offset for the big sphere
-            float radiusBig = 100.0f;
-            BodyBuilder bigBuilder = new BodyBuilder(new Vector3(xCentre,
-                                                                    -radiusBig + radiusBigYLocation,
-                                                                    zCentre),
+            numberSpheresPerSide = 15;
+            radius = 2.0f;
+            separationBetweenSpheres = 1.5f;
+
+            xCentre = 0.0f;
+            zCentre = -120.0f;
+            yLocation = 0.0f;
+
+            initialX = xCentre - (((numberSpheresPerSide - 1) * ((radius * 2.0f) + separationBetweenSpheres)) / 2.0f) - (separationBetweenSpheres / 2.0f);
+            initialZ = zCentre - (((numberSpheresPerSide - 1) * ((radius * 2.0f) + separationBetweenSpheres)) / 2.0f) - (separationBetweenSpheres / 2.0f);
+
+            for (int x = 0; x < numberSpheresPerSide; ++x)
+            {
+                yLocation -= separationBetweenSpheres;
+                for (int z = 0; z < numberSpheresPerSide; ++z)
+                {
+                    BodyBuilder builder = new BodyBuilder(
+                                                        new Vector3(initialX + (x * ((radius * 2) + separationBetweenSpheres)),
+                                                                    yLocation,
+                                                                    initialZ + (z * ((radius * 2) + separationBetweenSpheres))),
                                                         new Vector3(),
                                                         float.PositiveInfinity);
-            bigBuilder.setBoundingSphere(radiusBig);
-            bodys.Add(bigBuilder.build());
+                    builder.setBoundingSphere(radius);                    
+                    bodys.Add(builder.build());
+                }
+            }
 
             #endregion
         }
         public override void initEscena()
         {
             base.initEscena();
-            GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
+            GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -300.0f), new Vector3(0.0f, -50.0f, 100.0f));
         }
 
         public override string getTitle()
         {
-            return "Escena07 - Motor Fisica";
+            return "Escena13 - Motor Fisica";
         }
 
         public override string getDescription()
         {
-            return "Muchas esferas alineadas son afectadas por una fuerza caen en una gran esfera inmovil.";
+            return "Esferas alineadas caen sobre una plataforma inclinada. ";        
         }
     }
 }

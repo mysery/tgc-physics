@@ -72,6 +72,10 @@
     <Compile Include="Piguyis\Colisiones\CollisionManager.cs" />
     <Compile Include="Piguyis\Colisiones\CollisionType.cs" />
     <Compile Include="Piguyis\Colisiones\BoundingSphere.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena14.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena15.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena13.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena12.cs" />
     <Compile Include="Piguyis\EjemploAlumnoEsena11.cs" />
     <Compile Include="Piguyis\EjemploAlumnoEsena10.cs" />
     <Compile Include="Piguyis\EjemploAlumnoEsena09.cs" />
@@ -83,6 +87,10 @@
     <Compile Include="Piguyis\EjemploAlumnoEsena03.cs" />
     <Compile Include="Piguyis\EjemploAlumnoEsena02.cs" />
     <Compile Include="Piguyis\EjemploAlumnoEsena01.cs" />
+    <Compile Include="Piguyis\Esenas\Escena15.cs" />
+    <Compile Include="Piguyis\Esenas\Escena14.cs" />
+    <Compile Include="Piguyis\Esenas\Escena13.cs" />
+    <Compile Include="Piguyis\Esenas\Escena12.cs" />
     <Compile Include="Piguyis\Esenas\Escena11.cs" />
     <Compile Include="Piguyis\Esenas\Escena10.cs" />
     <Compile Include="Piguyis\Esenas\Escena09.cs" />

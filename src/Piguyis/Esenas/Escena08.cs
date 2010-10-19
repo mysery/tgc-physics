@@ -13,7 +13,10 @@ namespace AlumnoEjemplos.Piguyis.Esenas
     public class Escena08 : EscenaBase
     {
         private const float zLocation = -40.0f;
-
+        public override void render(float elapsedTime)
+        {
+            base.render(elapsedTime * 5f);
+        }
         protected override void createBodys()
         {
             #region Spheres
@@ -68,6 +71,16 @@ namespace AlumnoEjemplos.Piguyis.Esenas
         {
             base.initEscena();
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
+        }
+
+        public override string getTitle()
+        {
+            return "Escena08 - Motor Fisica";
+        }
+
+        public override string getDescription()
+        {
+            return "Muchas esferas posicionadas aleatoria mente son afectadas por una fuerza caen en una gran esfera inmovil.";
         }
     }
 }

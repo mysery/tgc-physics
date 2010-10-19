@@ -12,60 +12,33 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 {
     public class Escena05 : EscenaBase
     {
-        private const float zLocation = -40.0f;
-
         protected override void createBodys()
         {
-            #region Spheres
-            
-            // creo una grilla de cuerpos.
-            const int numberSpheresPerSide = 12;
-            const float radius = 5.0f;
-            const float separationBetweenSpheres = 2.0f;
+            const float radius = 20.0f;
 
-            const float xCentre = 0.0f;
-            const float zCentre = -120.0f;
-            float yLocation = 30.0f;
+            // sphere 1.
+            BodyBuilder builderLeft = new BodyBuilder(new Vector3(-radius * 2, 0.0f, 0.0f),
+                                                    new Vector3(), 1.0f);
+            builderLeft.setBoundingSphere(radius);
+            builderLeft.setForces(10.0f, 0.0f, 0.0f);
+            bodys.Add(builderLeft.build());
 
-            float initialX = xCentre - (((numberSpheresPerSide - 1) * ((radius * 2.0f) + separationBetweenSpheres)) / 2.0f) - (separationBetweenSpheres / 2.0f);
-            float initialZ = zCentre - (((numberSpheresPerSide - 1) * ((radius * 2.0f) + separationBetweenSpheres)) / 2.0f) - (separationBetweenSpheres / 2.0f);
-
-            for (int x = 0; x < numberSpheresPerSide; ++x)
-            {
-                for (int z = 0; z < numberSpheresPerSide; ++z)
-                {
-                    BodyBuilder builder = new BodyBuilder(
-                                                        new Vector3(initialX + (x * ((radius * 2) + separationBetweenSpheres)),
-                                                                    yLocation,
-                                                                    initialZ + (z * ((radius * 2) + separationBetweenSpheres))),
-                                                        new Vector3(), 
-                                                        1.0f);
-                    builder.setBoundingSphere(radius);                    
-                    builder.setForces(0.0f, -1.0f, 0.0f);
-                    bodys.Add(builder.build());
-                }
-            }
-
-            #endregion
-
-            #region BigSphere
-
-            float radiusBigYLocation = 10f; // the y offset for the big sphere
-            float radiusBig = 100.0f;
-            BodyBuilder bigBuilder = new BodyBuilder(new Vector3(  xCentre,
-                                                                    -radiusBig + radiusBigYLocation,
-                                                                    zCentre),
-                                                        new Vector3(),
-                                                        float.PositiveInfinity);
-            bigBuilder.setBoundingSphere(radiusBig);
-            bodys.Add(bigBuilder.build());
-
-            #endregion
+            // sphere 2.
+            BodyBuilder builderRight = new BodyBuilder(new Vector3(radius * 2, 0.0f, 0.0f),
+                                                    new Vector3(), 1.0f);
+            builderRight.setBoundingSphere(radius);
+            builderRight.setForces(-10.0f, 0.0f, 0.0f);
+            bodys.Add(builderRight.build());
         }
-        public override void initEscena()
+
+        public override string getTitle()
         {
-            base.initEscena();
-            GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
+            return "Escena05 - Motor Fisica";
+        }
+
+        public override string getDescription()
+        {
+            return "Dos esferas con aceleracion constante (fuerza constante e igual) de la misma masa chocan linealmente y rebotan segun el impulso";
         }
     }
 }

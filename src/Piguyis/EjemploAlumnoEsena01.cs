@@ -35,7 +35,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getName()
         {
-            return "Escena01 - Motor Fisica";
+            return e.getTitle();
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getDescription()
         {
-            return "Dos esferas con aceleracion constante (fuerza constante e igual) de la misma masa chocan linealmente y rebotan segun el impulso";
+            return e.getDescription();
         }
 
         private IEscena e = new Escena01();
