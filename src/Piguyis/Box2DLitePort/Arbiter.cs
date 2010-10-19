@@ -130,7 +130,6 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             float rn1 = Vector3.Dot(r1, contact.Normal);
             float rn2 = Vector3.Dot(r2, contact.Normal);
             float kNormal = this.body1.inverseMass + this.body2.inverseMass;
-            //TODO: body->InvI ignored.
             kNormal += (Vector3.Dot(r1, r1) - (rn1 * rn1)) + (Vector3.Dot(r2, r2) - (rn2 * rn2));
 
             contact.MassNormal = 1.0f / kNormal;
@@ -139,7 +138,6 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             float rt1 = Vector3.Dot(r1, tangent);
             float rt2 = Vector3.Dot(r2, tangent);
             float kTangent = this.body1.inverseMass + this.body2.inverseMass;
-            // TODO: body->InvI ignored.
             kTangent += (Vector3.Dot(r1, r1) - (rt1 * rt1)) + (Vector3.Dot(r2, r2) - (rt2 * rt2));
             contact.MassTangent = 1.0f / kTangent;
 
@@ -199,7 +197,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
 
             body1.Velocity = Vector3.Subtract(body1.Velocity, Vector3.Multiply(Pn, body1.inverseMass));
             body2.Velocity = Vector3.Add(body2.Velocity, Vector3.Multiply(Pn, body2.inverseMass));
-
+            
             //No entiendo muy bien esta parte.
             // TODO: if world::splitImpulses
             //Velocidad relativa

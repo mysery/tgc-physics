@@ -7,6 +7,7 @@ using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Body;
 using AlumnoEjemplos.Piguyis.Fisica;
 using TgcViewer;
+using AlumnoEjemplos.PiguYis.Matematica;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
@@ -28,17 +29,21 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             #endregion
         }
         private Random random = new Random();
+        private int pos = 0;
         public override void render(float elapsedTime)
         {
             Boolean newBody = GuiController.Instance.D3dInput.buttonUp(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_RIGHT);
             if (newBody)
             {
                 BodyBuilder builder = new BodyBuilder();
-                builder.setPosition(new Vector3((float)(50f*Math.Pow(-1,random.Next(1,3))), 
-                                                (float)(random.NextDouble() * 50f) + 10f,
-                                                (float)(50f * Math.Pow(-1,random.Next(1, 3)))));
+                builder.setPosition(new Vector3((FastMath.Cos(pos++/30f * FastMath.PI) * 50f), 
+                                                60f,
+                                                (50f * FastMath.Sin(pos++/30f * FastMath.PI))));
                 builder.setForces(0f, (float)random.NextDouble() * -10f, 0f);
                 this.world.addBody(builder.build());
+                if (pos > 60)
+                    pos = 0;
+
             }
 
             base.render(elapsedTime);
