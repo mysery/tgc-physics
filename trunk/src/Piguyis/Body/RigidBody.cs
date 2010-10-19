@@ -163,6 +163,7 @@ namespace AlumnoEjemplos.Piguyis.Body
 
         /// <summary>
         /// The coefficient of restitution.
+        /// o Factor de rebote.
         /// </summary>
         public float Restitution
         {

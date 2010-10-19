@@ -93,8 +93,8 @@
     <Compile Include="Piguyis\Esenas\Escena12.cs" />
     <Compile Include="Piguyis\Esenas\Escena11.cs" />
     <Compile Include="Piguyis\Esenas\Escena10.cs" />
-    <Compile Include="Piguyis\Esenas\Escena09.cs" />
     <Compile Include="Piguyis\Esenas\Escena08.cs" />
+    <Compile Include="Piguyis\Esenas\Escena09.cs" />
     <Compile Include="Piguyis\Esenas\Escena07.cs" />
     <Compile Include="Piguyis\Esenas\Escena06.cs" />
     <Compile Include="Piguyis\Esenas\Escena05.cs" />

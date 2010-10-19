@@ -153,7 +153,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             }
             // TODO: incluir angular velocity
             float vrel = Vector3.Dot(contact.Normal, body2.Velocity - body1.Velocity);
-            const float b2VelocityThreashold = 1.0f;
+            const float b2VelocityThreashold = 0.2f;
             if (vrel < b2VelocityThreashold)
             {
                 contact.Bias += -Math.Max(body1.Restitution, body2.Restitution) * vrel;
