@@ -19,7 +19,7 @@ namespace AlumnoEjemplos.Piguyis
     /// <summary>
     /// Ejemplo del alumno
     /// </summary>
-    public class EjemploAlumnoEsena1 : TgcExample
+    public class EjemploAlumnoEsena01 : TgcExample
     {
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -35,7 +35,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getName()
         {
-            return "Esena1 - Motor Fisica";
+            return "Escena01 - Motor Fisica";
         }
 
         /// <summary>
@@ -56,17 +56,6 @@ namespace AlumnoEjemplos.Piguyis
         public override void init()
         {
             e.initEsena();
-
-            ///////////////CONFIGURAR CAMARA PRIMERA PERSONA//////////////////
-            //Camara en primera persona, tipo videojuego FPS
-            //Solo puede haber una camara habilitada a la vez. Al habilitar la camara FPS se deshabilita la camara rotacional
-            GuiController.Instance.FpsCamera.Enable = true;
-            GuiController.Instance.FpsCamera.MovementSpeed = 100f;
-            GuiController.Instance.FpsCamera.JumpSpeed = 100f;
-            GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -200.0f), new Vector3(0.0f, -30.0f, 100.0f));
-
-            //Loggear por consola del Framework
-            //GuiController.Instance.Logger.log(elemento);
         }
 
         /// <summary>

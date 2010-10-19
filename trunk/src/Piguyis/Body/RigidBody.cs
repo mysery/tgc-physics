@@ -19,6 +19,7 @@ namespace AlumnoEjemplos.Piguyis.Body
         private float restitution = 1.0f;
         private Fuerza fuersasInternas;
         private Fuerza fuersasExternas = new Fuerza();
+        private TgcArrow debugForce;
         private Vector3 location = new Vector3();
         private Vector3 velocity = new Vector3();
         private TgcArrow debugVelocity;
@@ -49,7 +50,7 @@ namespace AlumnoEjemplos.Piguyis.Body
             this.velocity = velocity;
             this.mass = masa;
             this.debugVelocity = TgcArrow.fromDirection(location, velocity, Color.Green, Color.Green, 0.1f, new Vector2(0.6f, 1.2f));
-            
+            this.debugForce = TgcArrow.fromDirection(location, (this.fuersasInternas == null)? new Vector3():this.fuersasInternas.Vector, Color.Red, Color.Red, 0.1f, new Vector2(0.6f, 1.2f));
         }
 
         #endregion Constructor
@@ -79,6 +80,8 @@ namespace AlumnoEjemplos.Piguyis.Body
                 this.location = value;
                 boundingVolume.setPosition(this.location);
                 this.debugVelocity.PStart = this.location;
+                this.debugForce.PStart = this.location;
+                this.debugForce.PEnd = this.location + ((this.fuersasInternas == null) ? new Vector3() : this.fuersasInternas.Vector);
             }
         }
 
@@ -122,6 +125,7 @@ namespace AlumnoEjemplos.Piguyis.Body
             set
             {
                 this.fuersasInternas = value;
+                this.debugForce.PEnd = this.location + ((this.fuersasInternas == null) ? new Vector3() : this.fuersasInternas.Vector);
             }
         }
         public Fuerza FuersasExternas
@@ -178,6 +182,7 @@ namespace AlumnoEjemplos.Piguyis.Body
 
         /// <summary>
         /// Allows the body to update its physical state.
+        /// Ahora no lo uso.
         /// </summary>
         /// <param name="deltaTime">Time increment, in seconds.</param>
         public void Update(float deltaTime)
@@ -222,12 +227,14 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             this.BoundingVolume.render();
             this.debugVelocity.render();
+            this.debugForce.render();
         }
 
         public void dispose()
         {
             this.BoundingVolume.dispose();
             this.debugVelocity.dispose();
+            this.debugForce.render();
         }
 
         #endregion

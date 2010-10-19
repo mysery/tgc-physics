@@ -6,6 +6,7 @@ using AlumnoEjemplos.PiguYis.Matematica;
 using AlumnoEjemplos.Piguyis.Body;
 using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Box2DLitePort;
+using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
@@ -15,11 +16,16 @@ namespace AlumnoEjemplos.Piguyis.Esenas
         protected World world = null;
 
         #region Implementacion IEsena
-        public void initEsena()
+        public virtual void initEsena()
         {
             bodys = new List<RigidBody>();
             this.createBodys();
             this.world = new World(bodys);
+
+            GuiController.Instance.FpsCamera.Enable = true;
+            GuiController.Instance.FpsCamera.MovementSpeed = 100f;
+            GuiController.Instance.FpsCamera.JumpSpeed = 100f;
+            GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -200.0f), new Vector3(0.0f, -30.0f, 100.0f));
         }
 
         protected abstract void createBodys();
@@ -34,7 +40,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             }
         }
 
-        public void closeEsena()
+        public virtual void closeEsena()
         {
             foreach (RigidBody body in bodys)
             {
