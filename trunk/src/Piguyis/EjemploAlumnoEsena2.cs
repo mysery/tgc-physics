@@ -48,9 +48,7 @@ namespace AlumnoEjemplos.Piguyis
         }
 
         private IEsena e = new Esena2();
-        private TgcArrow a;
-
-        
+                
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
         /// Escribir aquí todo el código de inicialización: cargar modelos, texturas, modifiers, uservars, etc.

@@ -168,7 +168,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             //Aca lo agrega el Box2D
 
             //Perform iterations
-            int numberIterations = 50; // TODO: configurar
+            int numberIterations = 10; // TODO: configurar
             for (int i = 0; i < numberIterations; ++i)
             {
                 foreach (Arbiter arbiter in arbiters.Values)

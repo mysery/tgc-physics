@@ -332,7 +332,7 @@ namespace AlumnoEjemplos.Piguyis
             //TODO como evitar este casteo?
             //FibbonacciNode<T> fbNode = this.Insert(item, item);
             //internalHashtable.Add(item.GetHashCode(), fbNode);
-#warning TODO THIS; 
+            throw new MethodAccessException("no implementado");
         }
 
         /// <summary>

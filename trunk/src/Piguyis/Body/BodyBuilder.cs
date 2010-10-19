@@ -76,7 +76,7 @@ namespace AlumnoEjemplos.Piguyis.Body
             return rigidBody;
         }
 
-        internal void setRestitution(float res)
+        public void setRestitution(float res)
         {
             this.restitution = res;
         }
