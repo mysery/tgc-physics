@@ -18,7 +18,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
         public override string getDescription()
         {
-            return "no implementado";
+            return "Esferas rebotando con velocidad constante. Fila=1 Restitucion= 1.0, Fila=2 Restitucion= 0.9, Fila=3 Restitucion esfera derecha= 1.25 y las otras 0.8";
         }
 
         protected override void createBodys()
@@ -50,21 +50,21 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             BodyBuilder builder4 = new BodyBuilder(new Vector3(-radius * 3, 0f, 0.0f),
                                                     new Vector3(), float.PositiveInfinity);
             builder4.setBoundingSphere(radius);
-            builder4.setRestitution(0.8f);
+            builder4.setRestitution(0.9f);
             bodys.Add(builder4.build());
 
             // sphere 5.
             BodyBuilder builder5 = new BodyBuilder(new Vector3(radius * 3, 0f, 0.0f),
                                                     new Vector3(), float.PositiveInfinity);
             builder5.setBoundingSphere(radius);
-            builder5.setRestitution(0.8f);
+            builder5.setRestitution(0.9f);
             bodys.Add(builder5.build());
 
             // sphere 6.
             BodyBuilder builder6 = new BodyBuilder(new Vector3(),
                                                     new Vector3(10.0f, 0f, 0.0f), 1.0f);
             builder6.setBoundingSphere(radius);
-            builder6.setRestitution(0.8f);
+            builder6.setRestitution(0.9f);
             bodys.Add(builder6.build());
             #endregion
 
@@ -73,14 +73,14 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             BodyBuilder builder7 = new BodyBuilder(new Vector3(-radius * 3, -radius * 3, 0.0f),
                                                     new Vector3(), float.PositiveInfinity);
             builder7.setBoundingSphere(radius);
-            builder7.setRestitution(1.8f);
+            builder7.setRestitution(0.8f);
             bodys.Add(builder7.build());
 
             // sphere 8.
             BodyBuilder builder8 = new BodyBuilder(new Vector3(radius * 3, -radius * 3, 0.0f),
                                                     new Vector3(), float.PositiveInfinity);
             builder8.setBoundingSphere(radius);
-            builder8.setRestitution(0.8f);
+            builder8.setRestitution(1.25f);
             bodys.Add(builder8.build());
 
             // sphere 9.
