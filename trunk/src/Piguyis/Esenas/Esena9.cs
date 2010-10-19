@@ -6,6 +6,7 @@ using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Body;
 using AlumnoEjemplos.Piguyis.Fisica;
+using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
