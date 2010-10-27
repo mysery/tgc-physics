@@ -144,12 +144,10 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             // box2dlite version:
             //contact.Bias = -biasFactor * inverseTimeStep * Math.Min(0.0, contact.Separation + allowedPenetration);
             // de box2d 2.0.1
-            if (contact.Bias == 0.0)
+            contact.Bias = 0f;
+            if (contact.Separation > 0.0)
             {
-                if (contact.Separation > 0.0)
-                {
-                    contact.Bias = -60.0f * contact.Separation; //TODO: Bias Factor configurable.
-                }
+                contact.Bias = -60.0f * contact.Separation; //TODO: Bias Factor configurable.
             }
             // TODO: incluir angular velocity
             float vrel = Vector3.Dot(contact.Normal, body2.Velocity - body1.Velocity);
@@ -174,6 +172,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
 
             //Velocidad relativa
             //TODO: velocidad angular.
+            //b2Vec2 dv = v2 + b2Cross(w2, ccp->r2) - v1 - b2Cross(w1, ccp->r1);
             Vector3 dv = body2.Velocity - body1.Velocity;
 
             //impulso normal

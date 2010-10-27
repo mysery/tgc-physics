@@ -71,6 +71,7 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             RigidBody rigidBody = new RigidBody(position, velocity, mass);
             rigidBody.BoundingVolume = bounding;
+            rigidBody.BoundingVolume.setPosition(position);
             rigidBody.FuersasInternas = forces;
             rigidBody.Restitution = restitution;
             return rigidBody;
@@ -79,6 +80,11 @@ namespace AlumnoEjemplos.Piguyis.Body
         public void setRestitution(float res)
         {
             this.restitution = res;
+        }
+
+        internal void setBoundingPlane(BoundingPlane.Orientations o )
+        {
+            this.bounding = new BoundingPlane(o);
         }
     }
 }

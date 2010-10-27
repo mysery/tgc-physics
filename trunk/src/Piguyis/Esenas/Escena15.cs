@@ -18,12 +18,24 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
         public override string getDescription()
         {
-            return "no implementado";
+            return "Esfera contra plano";
         }
 
         protected override void createBodys()
         {
-            throw new Exception("The method or operation is not implemented.");
+            const float radius = 20.0f;
+
+            // sphere 1.
+            BodyBuilder builderLeft = new BodyBuilder(new Vector3(-radius * 2, 0.0f, 0.0f),
+                                                    new Vector3(10.0f, 0.0f, 0.0f), 1.0f);
+            builderLeft.setBoundingSphere(radius);
+            bodys.Add(builderLeft.build());
+
+            // sphere 2.
+            BodyBuilder builderRight = new BodyBuilder(new Vector3(radius * 2, 0.0f, 0.0f),
+                                                    new Vector3(), float.PositiveInfinity);
+            builderRight.setBoundingPlane(BoundingPlane.Orientations.YZplane);
+            bodys.Add(builderRight.build());
         }
     }
 }
