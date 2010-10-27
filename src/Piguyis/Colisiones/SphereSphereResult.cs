@@ -9,7 +9,7 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
     /// <summary>
     /// Holds information on whether a collision has occurred.
     /// </summary>
-    public enum CollisionType
+    public enum SphereSphereResult
     {
         /// <summary>
         /// The objects aren't in contact. They may be within

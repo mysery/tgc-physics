@@ -108,9 +108,21 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
                     {   
                         continue;
                     }
+                    Contact contact = null;
+                    if (bodyOuter.BoundingVolume is BoundingSphere && bodyInner.BoundingVolume is BoundingSphere)
+                        contact = CollisionManager.testCollision((BoundingSphere)bodyOuter.BoundingVolume,
+                                                                                  (BoundingSphere)bodyInner.BoundingVolume,
+                                                                                   bodyOuter.Velocity - bodyInner.Velocity,
+                                                                                   bodyOuter.Aceleracion - bodyInner.Aceleracion);
+                    else if (bodyOuter.BoundingVolume is BoundingSphere && bodyInner.BoundingVolume is BoundingPlane)
+                               contact = CollisionManager.testCollision((BoundingSphere)bodyOuter.BoundingVolume,
+                                                                        (BoundingPlane)bodyInner.BoundingVolume);
+                    else if (bodyOuter.BoundingVolume is BoundingPlane && bodyInner.BoundingVolume is BoundingSphere)
+                            contact = CollisionManager.testCollision((BoundingSphere)bodyInner.BoundingVolume,
+                                                                     (BoundingPlane)bodyOuter.BoundingVolume);
 
                     Arbiter arbiter = new Arbiter(this.WarmStarting, 
-                                                   CollisionManager.testCollision((BoundingSphere)bodyOuter.BoundingVolume, (BoundingSphere)bodyInner.BoundingVolume),
+                                                   contact,
                                                    bodyOuter, bodyInner);
                     ArbiterKey arbiterKey = new ArbiterKey(bodyOuter, bodyInner);
 
