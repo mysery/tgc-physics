@@ -116,10 +116,14 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
                                                                                    bodyOuter.Aceleracion - bodyInner.Aceleracion);
                     else if (bodyOuter.BoundingVolume is BoundingSphere && bodyInner.BoundingVolume is BoundingPlane)
                                contact = CollisionManager.testCollision((BoundingSphere)bodyOuter.BoundingVolume,
-                                                                        (BoundingPlane)bodyInner.BoundingVolume);
+                                                                        (BoundingPlane)bodyInner.BoundingVolume,
+                                                                                   bodyOuter.Velocity - bodyInner.Velocity,
+                                                                                   bodyOuter.Aceleracion - bodyInner.Aceleracion);
                     else if (bodyOuter.BoundingVolume is BoundingPlane && bodyInner.BoundingVolume is BoundingSphere)
                             contact = CollisionManager.testCollision((BoundingSphere)bodyInner.BoundingVolume,
-                                                                     (BoundingPlane)bodyOuter.BoundingVolume);
+                                                                     (BoundingPlane)bodyOuter.BoundingVolume,
+                                                                                   bodyOuter.Velocity - bodyInner.Velocity,
+                                                                                   bodyOuter.Aceleracion - bodyInner.Aceleracion);
 
                     Arbiter arbiter = new Arbiter(this.WarmStarting, 
                                                    contact,

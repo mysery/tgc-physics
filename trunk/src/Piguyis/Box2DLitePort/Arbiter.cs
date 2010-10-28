@@ -166,7 +166,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         /// </summary>
         public void ApplyImpulse()
         {
-            //TODO: todabia no le encontre el uso que le da en Box2D
+            //TODO: todabia no le encontre el uso que le da en Box2D, ^^ lo usa para la velocidad angular.
             contact.R1 = contact.Position - body1.Location;
             contact.R2 = contact.Position - body2.Location;
 

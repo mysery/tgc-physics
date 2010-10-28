@@ -72,24 +72,17 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
         /// Idica si un BoundingSphere colisiona con un plano
         /// </summary>
         /// <returns>True si hay colisión</returns>
-        public static Contact testCollision(BoundingSphere s, BoundingPlane boundingPlane)
+        public static Contact testCollision(BoundingSphere sphare, BoundingPlane boundingPlane, Vector3 relativeVelocity, Vector3 relativeAcceleration)
         {
             Plane plane = boundingPlane.Plane;
             Vector3 p = TgcCollisionUtils.toVector3(plane);
-/*
-            double d = -(planeNormal * planeOrigin);
-            double numer = planeNormal * rayOrigin + d;
-            double denom = planeNormal * rayVector;
-            return -(numer / denom);
-            */
             // For a normalized plane (|p.n| = 1), evaluating the plane equation
             // for a point gives the signed distance of the point to the plane
-            float dist = Vector3.Dot(s.getPosition(), p) + plane.D;
+            float dist = Vector3.Dot(sphare.getPosition(), p) + plane.D;
             // If sphere center within +/-radius from plane, plane intersects sphere
-            if (Math.Abs(dist) <= s.Radius)
+            if (Math.Abs(dist) <= sphare.Radius)
             {
-                p.Normalize();
-                return buildContact(s.getPosition(), s.Radius, p);
+                return buildContact(sphare.getPosition(), sphare.Radius - Math.Abs(dist), - p);
             }
 
             return null;
