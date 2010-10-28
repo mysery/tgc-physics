@@ -28,7 +28,6 @@ namespace TgcViewer.Utils.TgcGeometry
             TgcArrow arrow = new TgcArrow();
             arrow.pStart = start;
             arrow.pEnd = end;
-            //arrow.updateValues();
             return arrow;
         }
 
@@ -51,7 +50,6 @@ namespace TgcViewer.Utils.TgcGeometry
             arrow.headColor = headColor;
             arrow.thickness = thickness;
             arrow.headSize = headSize;
-            //arrow.updateValues();
             return arrow;
         }
 
@@ -66,7 +64,6 @@ namespace TgcViewer.Utils.TgcGeometry
             TgcArrow arrow = new TgcArrow();
             arrow.pStart = start;
             arrow.pEnd = start + direction;
-            //arrow.updateValues();
             return arrow;
         }
 
@@ -89,7 +86,6 @@ namespace TgcViewer.Utils.TgcGeometry
             arrow.headColor = headColor;
             arrow.thickness = thickness;
             arrow.headSize = headSize;
-            //arrow.updateValues();
             return arrow;
         }
 
@@ -97,6 +93,7 @@ namespace TgcViewer.Utils.TgcGeometry
 
         #region Atributes
         private bool dirtyValues;
+        private float oldLineLength;
         VertexBuffer vertexBuffer;
 
         Vector3 pStart;
@@ -207,14 +204,16 @@ namespace TgcViewer.Utils.TgcGeometry
         /// </summary>
         public void updateValues()
         {
-            CustomVertex.PositionColored[] vertices = new CustomVertex.PositionColored[54];
-
             //Crear caja en vertical en Y con longitud igual al módulo de la recta.
             Vector3 lineVec = Vector3.Subtract(pEnd, pStart);
             float lineLength = lineVec.Length();
+            if (oldLineLength.Equals(lineLength))
+                return;//Optimisacion, solo se recalgula si cambia el tamaño.
+            oldLineLength = lineLength;
             Vector3 min = new Vector3(-thickness, 0, -thickness);
             Vector3 max = new Vector3(thickness, lineLength, thickness);
 
+            CustomVertex.PositionColored[] vertices = new CustomVertex.PositionColored[54];
             //Vertices del cuerpo de la flecha
             int bc = bodyColor.ToArgb();
             // Front face
@@ -300,30 +299,30 @@ namespace TgcViewer.Utils.TgcGeometry
             vertices[53] = new CustomVertex.PositionColored(hMax.X, hMin.Y, hMax.Z, hc);
 
 
-            Matrix t = getTransform(ref lineVec);
+            //Matrix t = getTransform(ref lineVec);
             //Matrix t = getTransform();
 
             //Transformar todos los puntos
-            for (int i = 0; i < vertices.Length; i++)
-			{
-                vertices[i].Position = Vector3.TransformCoordinate(vertices[i].Position, t);
-			}
+            //for (int i = 0; i < vertices.Length; i++)
+			//{
+            //    vertices[i].Position = Vector3.TransformCoordinate(vertices[i].Position, t);
+			//}
 
             //Cargar vertexBuffer
             vertexBuffer.SetData(vertices, 0, LockFlags.None);
         }
 
-        private Matrix getTransform(ref Vector3 lineVec)
+        private Matrix getTransform(Vector3 lineVec)
         {
             //Obtener matriz de rotacion respecto del vector de la linea
             lineVec.Normalize();
             Vector3 originalDir = new Vector3(0, 1, 0);
             float angle = FastMath.Acos(Vector3.Dot(originalDir, lineVec));
             Vector3 axisRotation = Vector3.Cross(originalDir, lineVec);
-            axisRotation.Normalize();
-            return Matrix.RotationAxis(axisRotation, angle) * Matrix.Translation(pStart);            
+            axisRotation.Normalize();            
+            return Matrix.RotationAxis(axisRotation, angle) * Matrix.Translation(pStart);
         }
-/*
+
         private Vector3 IDENTITYZ = new Vector3(0f, 0f, 1f);
         private Vector3 IDENTITYY = new Vector3(0f, 1f, 0f);
         private Vector3 IDENTITYX = new Vector3(1f, 0f, 0f);
@@ -338,23 +337,33 @@ namespace TgcViewer.Utils.TgcGeometry
             Vector3 v3 = Vector3.Subtract(pEnd, pStart);
             v3.Normalize();
 
-            if (Vector3.Dot(v3, IDENTITYZ) != 0f)
-            {
-                v1 = Vector3.Cross(v3, IDENTITYZ);
-                v1.Normalize();
-                v2 = Vector3.Cross(v3, v1);
-                v2.Normalize();
-            }
+            //if (Vector3.Dot(v3, IDENTITYZ) != 0f)
+            //{
+            v1 = Vector3.Cross(v3, IDENTITYZ);
+            v1.Normalize();
+            v2 = Vector3.Cross(v3, v1);
+            v2.Normalize();
+  /*          }
+            else
+            {   
+                if (Vector3.Dot(v3, IDENTITYX) != 0f)
+                {
+                    v1 = Vector3.Cross(v3, IDENTITYX);
+                    v1.Normalize();
+                    v2 = Vector3.Cross(v3, v1);
+                    v2.Normalize();
+                }
+            }*/
 
             Matrix mx = new Matrix();
-            mx.M11 = v1.X; mx.M12 = v1.Y; mx.M13 = v1.Z;
-            mx.M21 = v2.X; mx.M22 = v2.Y; mx.M23 = v2.Z;
-            mx.M31 = v3.X; mx.M32 = v3.Y; mx.M33 = v3.Z;
+            mx.M11 = v1.X; mx.M12 = v2.X; mx.M13 = v3.X;
+            mx.M21 = v1.Y; mx.M22 = v2.Y; mx.M23 = v3.Y;
+            mx.M31 = v1.Z; mx.M32 = v2.Z; mx.M33 = v3.Z;
             mx.M44 = 1f;
 
             return mx * Matrix.Translation(pStart);
         }
-*/
+
         /// <summary>
         /// Renderizar la flecha
         /// </summary>
@@ -371,7 +380,7 @@ namespace TgcViewer.Utils.TgcGeometry
 
             texturesManager.clear(0);
             d3dDevice.Material = TgcD3dDevice.DEFAULT_MATERIAL;
-            d3dDevice.Transform.World = Matrix.Identity;
+            d3dDevice.Transform.World = this.getTransform(Vector3.Subtract(pEnd, pStart));
 
             d3dDevice.VertexFormat = CustomVertex.PositionColored.Format;
             d3dDevice.SetStreamSource(0, vertexBuffer, 0);
