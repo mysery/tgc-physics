@@ -81,14 +81,20 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
             float dist = Vector3.Dot(sphare.getPosition(), p) + plane.D;
             // If sphere center within +/-radius from plane, plane intersects sphere
             if (Math.Abs(dist) <= sphare.Radius)
-            {
+            {/*
                 //Vector3 reflect = 2 * p * Vector3.Dot(boundingPlane.Normal, sphareDirection) - sphareDirection;
                 Vector3 inverseDirection = Vector3.Multiply(sphareDirection, -1f);
                 float projection = Vector3.Dot(boundingPlane.Normal, inverseDirection);
                 Vector3 reflection = 2 * projection * boundingPlane.Normal + sphareDirection;
                 float length = reflection.Length();                
                 reflection.Normalize();
-                return buildContact(sphare.getPosition(), length, reflection);
+                return buildContact(sphare.getPosition(), length, reflection);*/
+                Contact contact = new Contact();
+                contact.Separation = Math.Abs(dist) - sphare.Radius;
+                contact.Normal = boundingPlane.Normal;
+                contact.ContactPoint = Vector3.Subtract(sphare.getPosition() - boundingPlane.getPosition(), Vector3.Multiply(contact.Normal, sphare.Radius));
+                contact.Position = contact.ContactPoint;
+                return contact;
             }
 
             return null;
