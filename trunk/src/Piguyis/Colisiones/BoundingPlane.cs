@@ -108,6 +108,11 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
             return box.calculateBoxCenter();
         }
 
+        public override float getRadius()
+        {
+            return box.calculateBoxRadius();
+        }
+
         public override void render()
         {            
             box.render();

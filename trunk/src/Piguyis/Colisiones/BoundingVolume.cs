@@ -18,6 +18,7 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
 
         public abstract void setPosition(Vector3 position);
         public abstract Vector3 getPosition();
+        public abstract float getRadius();
         public abstract void render();
         public abstract void dispose();
         

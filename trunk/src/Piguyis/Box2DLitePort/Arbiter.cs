@@ -151,11 +151,11 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             }
             // TODO: incluir angular velocity
             float vrel = Vector3.Dot(contact.Normal, body2.Velocity - body1.Velocity);
-            const float b2VelocityThreashold = 0.2f;
-            if (vrel < b2VelocityThreashold)
-            {
-                contact.Bias += -Math.Max(body1.Restitution, body2.Restitution) * vrel;
-            }
+            //const float b2VelocityThreashold = 0.2f;
+            //if (-Math.Abs(vrel) < -1f)
+            //{
+            contact.Bias += -Math.Max(body1.Restitution, body2.Restitution) * Math.Abs(vrel);
+            //}
 
             // TODO: if world::accumulateImpulses
             // ....

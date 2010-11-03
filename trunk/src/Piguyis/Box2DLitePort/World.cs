@@ -36,6 +36,9 @@ using System.Collections.Generic;
 using System.Text;
 using AlumnoEjemplos.Piguyis.Colisiones;
 using AlumnoEjemplos.Piguyis.Body;
+using AlumnoEjemplos.Piguyis.Estructuras.Octree;
+using System.Collections;
+using Microsoft.DirectX;
 
 namespace AlumnoEjemplos.Piguyis.Box2DLitePort
 {
@@ -46,8 +49,12 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
     {
         #region Private Member Variables
        
-        private List<RigidBody> rigidBodys;
+        private Octree octreeRigidBodys;
+        private List<RigidBody> rigidBodysList;
         private Dictionary<ArbiterKey, Arbiter> arbiters = new Dictionary<ArbiterKey, Arbiter>();
+        private static float MAX_RADIUS = 5f;
+        private static float MIN_VALUE = -5f;
+        private static float MAX_VALUE = 5f;
 
         #endregion Private Member Variables
 
@@ -59,7 +66,12 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         /// <param name="spheres"></param>
         public World(List<RigidBody> rigidBodys)
         {
-            this.rigidBodys = rigidBodys;
+            this.octreeRigidBodys = new Octree(MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, rigidBodys.Count + 20);
+            foreach (RigidBody body in rigidBodys)
+	        {
+                this.octreeRigidBodys.AddNode(body.Location, body);
+	        }
+            this.rigidBodysList = rigidBodys;
         }
 
         /// <summary>
@@ -68,14 +80,23 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         /// <param name="spheres"></param>
         public World()
         {
-            this.rigidBodys = new List<RigidBody>();
+            this.octreeRigidBodys = new Octree(MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, 100);
+            this.rigidBodysList = new List<RigidBody>(100);
         }
 
         #endregion Object Lifetime
 
         public void addBody(RigidBody body)
         {
-            this.rigidBodys.Add(body);
+            if (rigidBodysList.Count > this.octreeRigidBodys.top.maxItems)
+            {
+                this.octreeRigidBodys = new Octree(MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, rigidBodysList.Count + 21);
+                foreach (RigidBody b in rigidBodysList)
+                    this.octreeRigidBodys.AddNode(b.Location, b);
+            }
+
+            this.octreeRigidBodys.AddNode(body.Location, body);
+            this.rigidBodysList.Add(body);
         }
 
         /// <summary>
@@ -95,38 +116,36 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         /// </summary>
         public void CollidePhase()
         {
-            //TODO performar esta deteccion O(n^2)
-            for (int i = 0; i < rigidBodys.Count; ++i)
+            foreach (RigidBody bodyPivot in rigidBodysList)
             {
-                RigidBody bodyOuter = rigidBodys[i];
-                for (int j = i + 1; j < rigidBodys.Count; ++j)
+                ArrayList nearList = octreeRigidBodys.GetNodes(bodyPivot.Location, bodyPivot.BoundingVolume.getRadius() * MAX_RADIUS);
+                foreach (RigidBody bodyNear in nearList)
                 {
-                    RigidBody bodyInner = rigidBodys[j];
-
-                    if (float.IsInfinity(bodyOuter.Mass)
-                        && float.IsInfinity(bodyInner.Mass))
+                    if (bodyPivot.Equals(bodyNear) ||
+                        (float.IsInfinity(bodyPivot.Mass)
+                        && float.IsInfinity(bodyNear.Mass)))
                     {   
                         continue;
                     }
                     Contact contact = null;
-                    if (bodyOuter.BoundingVolume is BoundingSphere && bodyInner.BoundingVolume is BoundingSphere)
-                        contact = CollisionManager.testCollision((BoundingSphere)bodyOuter.BoundingVolume,
-                                                                                  (BoundingSphere)bodyInner.BoundingVolume,
-                                                                                   bodyOuter.Velocity - bodyInner.Velocity,
-                                                                                   bodyOuter.Aceleracion - bodyInner.Aceleracion);
-                    else if (bodyOuter.BoundingVolume is BoundingSphere && bodyInner.BoundingVolume is BoundingPlane)
-                               contact = CollisionManager.testCollision((BoundingSphere)bodyOuter.BoundingVolume,
-                                                                        (BoundingPlane)bodyInner.BoundingVolume,
-                                                                                   bodyOuter.Velocity);
-                    else if (bodyOuter.BoundingVolume is BoundingPlane && bodyInner.BoundingVolume is BoundingSphere)
-                            contact = CollisionManager.testCollision((BoundingSphere)bodyInner.BoundingVolume,
-                                                                     (BoundingPlane)bodyOuter.BoundingVolume,
-                                                                                   bodyInner.Velocity);
+                    if (bodyPivot.BoundingVolume is BoundingSphere && bodyNear.BoundingVolume is BoundingSphere)
+                        contact = CollisionManager.testCollision((BoundingSphere)bodyPivot.BoundingVolume,
+                                                                                  (BoundingSphere)bodyNear.BoundingVolume,
+                                                                                   bodyPivot.Velocity - bodyNear.Velocity,
+                                                                                   bodyPivot.Aceleracion - bodyNear.Aceleracion);
+                    else if (bodyPivot.BoundingVolume is BoundingSphere && bodyNear.BoundingVolume is BoundingPlane)
+                               contact = CollisionManager.testCollision((BoundingSphere)bodyPivot.BoundingVolume,
+                                                                        (BoundingPlane)bodyNear.BoundingVolume,
+                                                                                   bodyPivot.Velocity);
+                    else if (bodyPivot.BoundingVolume is BoundingPlane && bodyNear.BoundingVolume is BoundingSphere)
+                            contact = CollisionManager.testCollision((BoundingSphere)bodyNear.BoundingVolume,
+                                                                     (BoundingPlane)bodyPivot.BoundingVolume,
+                                                                                   bodyNear.Velocity);
 
                     Arbiter arbiter = new Arbiter(this.WarmStarting, 
                                                    contact,
-                                                   bodyOuter, bodyInner);
-                    ArbiterKey arbiterKey = new ArbiterKey(bodyOuter, bodyInner);
+                                                   bodyPivot, bodyNear);
+                    ArbiterKey arbiterKey = new ArbiterKey(bodyPivot, bodyNear);
 
                     //TODO contact != null es lo mismo que una colision.
                     if (arbiter.Contact != null)
@@ -163,7 +182,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             float inverseTimeStep = timeStep > 0f ? (1f / timeStep) : 0f;
             
             //Calculo de fuerzas.            
-            foreach (RigidBody rigidBody in rigidBodys)
+            foreach (RigidBody rigidBody in rigidBodysList)
             {
                 if (float.IsInfinity(rigidBody.Mass))
                 {
@@ -182,7 +201,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             //Aca lo agrega el Box2D
 
             //Perform iterations
-            int numberIterations = 10; // TODO: configurar
+            int numberIterations = 20; // TODO: configurar
             for (int i = 0; i < numberIterations; ++i)
             {
                 foreach (Arbiter arbiter in arbiters.Values)
@@ -192,9 +211,19 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             }
 
             //Calcular Velocidades
-            foreach (RigidBody rigidBody in rigidBodys)
+            foreach (RigidBody rigidBody in rigidBodysList)
             {
+                if (float.IsInfinity(rigidBody.Mass))
+                {
+                    continue;
+                }
+                Vector3 oldLocation = new Vector3(rigidBody.Location.X, rigidBody.Location.Y, rigidBody.Location.Z);
                 rigidBody.IntegrateVelocitySI(timeStep);
+                if (Vector3.Subtract(oldLocation, rigidBody.Location).LengthSq() > 25f)
+                {
+                    octreeRigidBodys.RemoveNode(oldLocation, rigidBody);
+                    octreeRigidBodys.AddNode(rigidBody.Location, rigidBody);
+                }
             }
         }
     }
