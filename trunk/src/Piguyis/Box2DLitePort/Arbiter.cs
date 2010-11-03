@@ -147,15 +147,15 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             contact.Bias = 0f;
             if (contact.Separation > 0.0)
             {
-                contact.Bias = -60.0f * contact.Separation; //TODO: Bias Factor configurable.
+                contact.Bias = -10f * contact.Separation; //TODO: Bias Factor configurable.
             }
             // TODO: incluir angular velocity
             float vrel = Vector3.Dot(contact.Normal, body2.Velocity - body1.Velocity);
-            //const float b2VelocityThreashold = 0.2f;
-            //if (-Math.Abs(vrel) < -1f)
-            //{
-            contact.Bias += -Math.Max(body1.Restitution, body2.Restitution) * Math.Abs(vrel);
-            //}
+            //const float b2VelocityThreashold = 1f;
+            if (vrel < 1f)
+            {
+                contact.Bias += -Math.Max(body1.Restitution, body2.Restitution) * vrel;
+            }
 
             // TODO: if world::accumulateImpulses
             // ....

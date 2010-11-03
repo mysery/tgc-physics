@@ -24,6 +24,8 @@ namespace AlumnoEjemplos.Piguyis.Body
         private Vector3 velocity = new Vector3();
         private TgcArrow debugVelocity;
         private BoundingVolume boundingVolume = new BoundingNullObject();
+        private string meshType;
+
         /// <summary>
         /// The biased velocity (velocidad parcial) - see the Box2D Port classes.
         /// TODO ver aplicacion.
@@ -56,6 +58,17 @@ namespace AlumnoEjemplos.Piguyis.Body
         #endregion Constructor
 
         #region Getters y setters
+        public string MeshType
+        {
+            get
+            {
+                return this.meshType;
+            }
+            set
+            {
+                this.meshType = value;
+            }
+        }
 
         public BoundingVolume BoundingVolume
         {
@@ -68,7 +81,7 @@ namespace AlumnoEjemplos.Piguyis.Body
                 this.boundingVolume = value;
             }
         }
-
+        
         public Vector3 Location
         {
             get
@@ -78,7 +91,7 @@ namespace AlumnoEjemplos.Piguyis.Body
             set
             {
                 this.location = value;
-                boundingVolume.setPosition(this.location);
+                boundingVolume.setPosition(this.location);                
                 this.debugVelocity.PStart = this.location;
                 this.debugForce.PStart = this.location;
                 this.debugForce.PEnd = this.location + ((this.fuersasInternas == null) ? new Vector3() : this.fuersasInternas.Vector);
@@ -226,9 +239,16 @@ namespace AlumnoEjemplos.Piguyis.Body
 
         public void render()
         {
-            this.BoundingVolume.render();
-            this.debugVelocity.render();
-            this.debugForce.render();
+            if ((bool)TgcViewer.GuiController.Instance.Modifiers.getValue("debugMode"))
+            {
+                this.BoundingVolume.render();
+                this.debugVelocity.render();
+                this.debugForce.render();
+            }
+            else
+            {
+                MeshPool.Instance.getMeshToRender(this.meshType, this.location, this.BoundingVolume.getRadius()).render();
+            }            
         }
 
         public void dispose()

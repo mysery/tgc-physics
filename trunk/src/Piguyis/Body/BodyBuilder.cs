@@ -4,6 +4,9 @@ using System.Text;
 using AlumnoEjemplos.Piguyis.Colisiones;
 using AlumnoEjemplos.Piguyis.Fisica;
 using Microsoft.DirectX;
+using TgcViewer.Utils.TgcSceneLoader;
+using TgcViewer;
+using AlumnoEjemplos.Piguyis.TGCView;
 
 namespace AlumnoEjemplos.Piguyis.Body
 {
@@ -18,12 +21,13 @@ namespace AlumnoEjemplos.Piguyis.Body
         private const float DEFAULT_MASS = 1f;
         private const float DEFAULT_RESTITUTION = 1f;
         private const float DEFAULT_RADIUS = 5f;
+        private string meshType;
 
         public BodyBuilder()
         {
             this.position = new Vector3();
             this.velocity = new Vector3();
-            this.bounding = new BoundingSphere(DEFAULT_RADIUS);
+            this.setBoundingSphere(DEFAULT_RADIUS);
             this.mass = DEFAULT_MASS;
         }
 
@@ -35,7 +39,7 @@ namespace AlumnoEjemplos.Piguyis.Body
             {
                 throw new ArgumentException("Mass should not be negative", "mass");
             }
-            this.mass = mass;
+            this.mass = mass;            
         }
 
         public void setForces(Vector3 v)
@@ -65,6 +69,7 @@ namespace AlumnoEjemplos.Piguyis.Body
         public void setBoundingSphere(float radius)
         {
             this.bounding = new BoundingSphere(radius);
+            meshType = MeshPool.SHPERE_TYPE;            
         }
 
         public RigidBody build()
@@ -74,6 +79,7 @@ namespace AlumnoEjemplos.Piguyis.Body
             rigidBody.BoundingVolume.setPosition(position);
             rigidBody.FuersasInternas = forces;
             rigidBody.Restitution = restitution;
+            rigidBody.MeshType = meshType;
             return rigidBody;
         }
 
@@ -85,6 +91,7 @@ namespace AlumnoEjemplos.Piguyis.Body
         internal void setBoundingPlane(BoundingPlane.Orientations o )
         {
             this.bounding = new BoundingPlane(o);
+            this.meshType = null;
         }
     }
 }

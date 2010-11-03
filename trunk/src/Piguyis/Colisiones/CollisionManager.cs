@@ -33,7 +33,9 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
             {
                 float fix = Math.Abs(lineOfSeparation.Length() - sphere1.getRadius());
                 lineOfSeparation.Normalize();
-                return buildContact(sphere2.getPosition(), sphere2.getRadius() + fix, lineOfSeparation);
+                Contact c = buildContact(sphere2.getPosition(), sphere2.getRadius() + fix, lineOfSeparation);
+                c.Separation = Math.Abs(fix - sphere2.getRadius());
+                return c;
             }
             lineOfSeparation.Normalize();
             if (result.Equals(SphereSphereResult.Collision))
@@ -146,7 +148,7 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
                     }
                 }
             }
-            else if (FastMath.IsEqualWithinTol(separation, combinedRadius))
+            else if (!FastMath.IsEqualWithinTol(separation, combinedRadius))
             {
                 result = SphereSphereResult.Collision;
             }

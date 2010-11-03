@@ -30,6 +30,10 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             GuiController.Instance.FpsCamera.MovementSpeed = 100f;
             GuiController.Instance.FpsCamera.JumpSpeed = 100f;
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -200.0f), new Vector3(0.0f, -30.0f, 100.0f));
+
+            GuiController.Instance.Modifiers.addBoolean("debugMode", "Debug Mode", false);
+            GuiController.Instance.Modifiers.addBoolean("colisionDetect", "Deteccion de colisiones", true);
+            GuiController.Instance.Modifiers.addBoolean("applyPhysics", "Calculos fisicos", true);
         }
 
         protected abstract void createBodys();
@@ -69,9 +73,10 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             
         public enum Density
         {
-            Low = 1,
-            Medium = 2,
-            High = 3
+            Low = 5,
+            Medium = 20,
+            High = 250,
+            Heavy = 200
         }
     }
 }

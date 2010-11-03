@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Piguyis\Body\BodyBuilder.cs" />
+    <Compile Include="Piguyis\Body\MeshPool.cs" />
     <Compile Include="Piguyis\Body\RigidBody.cs" />
     <Compile Include="Piguyis\Box2DLitePort\Arbiter.cs" />
     <Compile Include="Piguyis\Box2DLitePort\ArbiterKey.cs" />
