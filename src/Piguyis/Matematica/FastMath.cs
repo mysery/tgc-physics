@@ -7,7 +7,7 @@ namespace AlumnoEjemplos.PiguYis.Matematica
 {
     public class FastMath
     {
-        private const float Tolerance = 1e-4F;
+        private const float TOLERANCE = 1e-5f;
 
         private const float pi = (float)Math.PI;
         private const float pi2 = pi * 2;
@@ -53,12 +53,12 @@ namespace AlumnoEjemplos.PiguYis.Matematica
 
         public static bool IsEqualWithinTol(float val1, float val2)
         {
-            return Math.Abs(val1 - val2) < Tolerance;
+            return Math.Abs(val1 - val2) < TOLERANCE;
         }
 
         public static bool MinusTolerance(float val1)
         {
-            return val1 < Tolerance;
+            return val1 < TOLERANCE;
         }
 
         /// <summary>

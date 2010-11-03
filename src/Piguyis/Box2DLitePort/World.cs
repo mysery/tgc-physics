@@ -80,8 +80,8 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         /// <param name="spheres"></param>
         public World()
         {
-            this.octreeRigidBodys = new Octree(MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, 100);
-            this.rigidBodysList = new List<RigidBody>(100);
+            this.octreeRigidBodys = new Octree(MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, 20);
+            this.rigidBodysList = new List<RigidBody>(20);
         }
 
         #endregion Object Lifetime
@@ -177,7 +177,8 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         public void Step(float timeStep)
         {
             //Deteccion de colisiones y armado de arbitros.
-            CollidePhase();
+            if ((bool)TgcViewer.GuiController.Instance.Modifiers.getValue("colisionDetect"))
+                CollidePhase();
 
             float inverseTimeStep = timeStep > 0f ? (1f / timeStep) : 0f;
             
@@ -190,26 +191,27 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
                 }
                 rigidBody.IntegrateForceSI(timeStep);
             }
-
-            //Perform pre-steps.
-            foreach (Arbiter arbiter in arbiters.Values)
+            if ((bool)TgcViewer.GuiController.Instance.Modifiers.getValue("applyPhysics"))
             {
-                arbiter.PreStep(inverseTimeStep);
-            }
-
-            // TODO: joints (encadenamientos y fuerzas de atraccion entre cuerpos)
-            //Aca lo agrega el Box2D
-
-            //Perform iterations
-            int numberIterations = 20; // TODO: configurar
-            for (int i = 0; i < numberIterations; ++i)
-            {
+                //Perform pre-steps.
                 foreach (Arbiter arbiter in arbiters.Values)
                 {
-                    arbiter.ApplyImpulse();
+                    arbiter.PreStep(inverseTimeStep);
+                }
+
+                // TODO: joints (encadenamientos y fuerzas de atraccion entre cuerpos)
+                //Aca lo agrega el Box2D
+
+                //Perform iterations
+                int numberIterations = 10; // TODO: configurar
+                for (int i = 0; i < numberIterations; ++i)
+                {
+                    foreach (Arbiter arbiter in arbiters.Values)
+                    {
+                        arbiter.ApplyImpulse();
+                    }
                 }
             }
-
             //Calcular Velocidades
             foreach (RigidBody rigidBody in rigidBodysList)
             {
@@ -219,12 +221,14 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
                 }
                 Vector3 oldLocation = new Vector3(rigidBody.Location.X, rigidBody.Location.Y, rigidBody.Location.Z);
                 rigidBody.IntegrateVelocitySI(timeStep);
-                if (Vector3.Subtract(oldLocation, rigidBody.Location).LengthSq() > 25f)
-                {
+                //if (Vector3.Subtract(oldLocation, rigidBody.Location).LengthSq() > 25f)
+                //{
                     octreeRigidBodys.RemoveNode(oldLocation, rigidBody);
-                    octreeRigidBodys.AddNode(rigidBody.Location, rigidBody);
-                }
+                    octreeRigidBodys.AddNode(rigidBody.Location, rigidBody);                    
+                //}
             }
+
+            arbiters.Clear();
         }
     }
 }
