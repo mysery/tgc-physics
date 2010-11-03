@@ -107,6 +107,17 @@
     <Compile Include="Piguyis\Esenas\EscenaBase.cs" />
     <Compile Include="Piguyis\Estructuras\FibbonacciHeap.cs" />
     <Compile Include="Piguyis\Estructuras\FibbonacciNode.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\FastSerialization.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\IOctree.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\Octree.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\OctreeBox.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\OctreeDistance.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\OctreeLeaf.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\OctreeNode.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\Point3d.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\Point3f.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\Vector3d.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\Vector3f.cs" />
     <Compile Include="Piguyis\Estructuras\RNode.cs" />
     <Compile Include="Piguyis\Estructuras\RPoint.cs" />
     <Compile Include="Piguyis\Estructuras\RRectangle.cs" />

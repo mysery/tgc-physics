@@ -23,22 +23,6 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="rigidBody">Holds the sphere's location and velocity.</param>
-        /// <param name="radius">The sphere's radius</param>
-        public BoundingSphere(RigidBody rigidBody, float radius)
-        {
-            if (radius < 0.0)
-            {
-                throw new ArgumentException("Radius should not be negative", "radius");
-            }            
-            sphare = new TgcBoundingSphere(rigidBody.Location, radius);
-            //TODO proximo refacor con builder.
-            rigidBody.BoundingVolume = this;
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
         /// <param name="radius">The sphere's radius</param>
         public BoundingSphere(float radius)
         {
@@ -51,20 +35,6 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
 
         #endregion Object Lifetime
 
-		#region get y sets
-
-        /// <summary>
-        /// Returns the Sphere's radius.
-        /// </summary>
-        public float Radius
-        {
-            get
-            {
-                return this.sphare.Radius;
-            }
-        }
-
-		#endregion Public Properties
 
         #region Implements BoundingVolume Methods
         public override void setPosition(Vector3 position)
@@ -75,6 +45,11 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
         public override Vector3 getPosition()
         {
             return sphare.Center;
+        }
+
+        public override float getRadius()
+        {
+            return sphare.Radius;
         }
 
         public override void render()

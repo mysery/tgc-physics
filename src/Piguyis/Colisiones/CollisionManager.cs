@@ -31,24 +31,24 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
             Vector3 lineOfSeparation = Vector3.Subtract(sphere2.getPosition(), sphere1.getPosition());
             if (result.Equals(SphereSphereResult.Intersection))
             {
-                float fix = Math.Abs(lineOfSeparation.Length() - sphere1.Radius);
+                float fix = Math.Abs(lineOfSeparation.Length() - sphere1.getRadius());
                 lineOfSeparation.Normalize();
-                return buildContact(sphere2.getPosition(), sphere2.Radius + fix, lineOfSeparation);
+                return buildContact(sphere2.getPosition(), sphere2.getRadius() + fix, lineOfSeparation);
             }
             lineOfSeparation.Normalize();
             if (result.Equals(SphereSphereResult.Collision))
             {
-                return buildContact(sphere2.getPosition(), sphere2.Radius, lineOfSeparation);
+                return buildContact(sphere2.getPosition(), sphere2.getRadius(), lineOfSeparation);
             }
 /* por el momento no voy a tener en cuenta esto.
             else if (result.Equals(SphereSphereResult.TouchingContact))
             {
                 //en este momento tengo objetos cercanos y no me interesa si no tiene fuerzas ni velocidad pero estan en contacto.
-                return null;// buildContact(sphere2.getPosition(), sphere2.Radius, lineOfSeparation);
+                return null;// buildContact(sphere2.getPosition(), sphere2.getRadius(), lineOfSeparation);
             }
             else if (result.Equals(SphereSphereResult.ForcedContact))
             {
-                return null;//buildContact(sphere2.getPosition(), sphere2.Radius, lineOfSeparation);
+                return null;//buildContact(sphere2.getPosition(), sphere2.getRadius(), lineOfSeparation);
             }
 */
             return null;
@@ -80,7 +80,7 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
             // for a point gives the signed distance of the point to the plane
             float dist = Vector3.Dot(sphare.getPosition(), p) + plane.D;
             // If sphere center within +/-radius from plane, plane intersects sphere
-            if (Math.Abs(dist) <= sphare.Radius)
+            if (Math.Abs(dist) <= sphare.getRadius())
             {/*
                 //Vector3 reflect = 2 * p * Vector3.Dot(boundingPlane.Normal, sphareDirection) - sphareDirection;
                 Vector3 inverseDirection = Vector3.Multiply(sphareDirection, -1f);
@@ -90,9 +90,9 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
                 reflection.Normalize();
                 return buildContact(sphare.getPosition(), length, reflection);*/
                 Contact contact = new Contact();
-                contact.Separation = Math.Abs(dist) - sphare.Radius;
+                contact.Separation = Math.Abs(dist) - sphare.getRadius();
                 contact.Normal = boundingPlane.Normal;
-                contact.ContactPoint = Vector3.Subtract(sphare.getPosition() - boundingPlane.getPosition(), Vector3.Multiply(contact.Normal, sphare.Radius));
+                contact.ContactPoint = Vector3.Subtract(sphare.getPosition() - boundingPlane.getPosition(), Vector3.Multiply(contact.Normal, sphare.getRadius()));
                 contact.Position = contact.ContactPoint;
                 return contact;
             }
@@ -111,7 +111,7 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
             Vector3 vectorThisCentreToOther = rhs.getPosition() - lhs.getPosition();
 
             float separation = Vector3.Dot(vectorThisCentreToOther, vectorThisCentreToOther);
-            float combinedRadius = lhs.Radius + rhs.Radius;
+            float combinedRadius = lhs.getRadius() + rhs.getRadius();
             combinedRadius = combinedRadius * combinedRadius;
             if (separation > combinedRadius)
             {
