@@ -37,10 +37,10 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                                                                         zOffset + (radius * 2 * z) + (y * radius)),
                                                             new Vector3(),
                                                             y != 0 ? 1.0f : float.PositiveInfinity);
-                        builder.setBoundingSphere(radius);
+                        builder.SetBoundingSphere(radius);
                         if (y != 0)
-                            builder.setForces(0.0f, -1.0f, 0.0f);
-                        bodys.Add(builder.build());
+                            builder.SetForces(0.0f, -1.0f, 0.0f);
+                        bodys.Add(builder.Build());
                     }
                 }
             }

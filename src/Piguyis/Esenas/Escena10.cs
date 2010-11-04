@@ -23,8 +23,8 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                                                                  0f),
                                                         new Vector3(),
                                                         float.PositiveInfinity);
-            bigBuilder.setBoundingSphere(radiusBig);
-            bodys.Add(bigBuilder.build());
+            bigBuilder.SetBoundingSphere(radiusBig);
+            bodys.Add(bigBuilder.Build());
 
             #endregion
         }
@@ -36,11 +36,11 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             if (newBody)
             {
                 BodyBuilder builder = new BodyBuilder();
-                builder.setPosition(new Vector3((FastMath.Cos(pos++/30f * FastMath.PI) * 50f), 
+                builder.SetPosition(new Vector3((FastMath.Cos(pos++/30f * FastMath.PI) * 50f), 
                                                 60f,
                                                 (50f * FastMath.Sin(pos++/30f * FastMath.PI))));
-                builder.setForces(0f, (float)random.NextDouble() * -10f, 0f);
-                this.world.addBody(builder.build());
+                builder.SetForces(0f, (float)random.NextDouble() * -10f, 0f);
+                this.world.AddBody(builder.Build());
                 if (pos > 60)
                     pos = 0;
 

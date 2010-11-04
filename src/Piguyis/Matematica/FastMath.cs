@@ -1,70 +1,69 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.DirectX;
 
 namespace AlumnoEjemplos.PiguYis.Matematica
 {
     public class FastMath
     {
-        private const float TOLERANCE = 1e-5f;
+        private const float Tolerance = 1e-5f;
 
-        private const float pi = (float)Math.PI;
-        private const float pi2 = pi * 2;
-        private const float pid2 = pi / 2;
-        private const float pisqr = pi * pi;
-        private const float pid180 = pi / 180;
+        private const float Pi = (float)Math.PI;
+        private const float Pi2 = Pi * 2;
+        private const float Pid2 = Pi / 2;
+        private const float Pisqr = Pi * Pi;
+        private const float Pid180 = Pi / 180;
 
-        private const float B = 4 / pi;
-        private const float C = -4 / pisqr;
+        private const float B = 4 / Pi;
+        private const float C = -4 / Pisqr;
 
         // Extra precision
         private const float P = 0.225f;
+/*
         private const float Q = 0.775f;
+*/
 
         #region Setters & Getters
 
         public static float PI
         {
-            get { return pi; }
+            get { return Pi; }
         }
 
         public static float PI2
         {
-            get { return pi2; }
+            get { return Pi2; }
         }
 
         public static float PID2
         {
-            get { return pid2; }
+            get { return Pid2; }
         }
 
         public static float PISQR
         {
-            get { return pisqr; }
+            get { return Pisqr; }
         }
 
         public static float PID180
         {
-            get { return pid180; }
+            get { return Pid180; }
         }
 
         #endregion
 
         public static bool IsEqualWithinTol(float val1, float val2)
         {
-            return Math.Abs(val1 - val2) < TOLERANCE;
+            return Math.Abs(val1 - val2) < Tolerance;
         }
 
         public static bool MinusTolerance(float val1)
         {
-            return val1 < TOLERANCE;
+            return val1 < Tolerance;
         }
 
         /// <summary>
         /// Aproximacion rapida de la funcion trigonometrica Sin()
         /// </summary>
-        /// <param name="degrees">Angulo en radianes</param>
+        /// <param name="radians">Angulo en radianes</param>
         public static float Sin(float radians)
         {
             // Los valores de PI deben estar entre -PI y PI para poder utilizar la siguiente aproximacion
@@ -89,7 +88,7 @@ namespace AlumnoEjemplos.PiguYis.Matematica
         /// <summary>
         /// Aproximacion rapida de la funcion trigonometrica Cos()
         /// </summary>
-        /// <param name="degrees">Angulo en radianes</param>
+        /// <param name="radians">Angulo en radianes</param>
         public static float Cos(float radians)
         {
             return Sin(radians + PI / 2); // Cos(x) = Sin(x + PI / 2)

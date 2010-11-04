@@ -1,14 +1,6 @@
 // Copyright Gary Evans 2006-2008
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using AlumnoEjemplos.Piguyis.Body;
 using Microsoft.DirectX;
-using AlumnoEjemplos.PiguYis.Matematica;
-using TgcViewer;
-using Microsoft.DirectX.Direct3D;
-using AlumnoEjemplos.Piguyis.TGCView;
 using TgcViewer.Utils.TgcGeometry;
 
 
@@ -78,10 +70,9 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
                 Vector3 pos = box.calculateBoxCenter();
                 if (Orientations.XYplane.Equals(this.orientation))
                     return new Plane(0f, 0f, -1f, pos.Z);
-                else if (Orientations.XZplane.Equals(this.orientation))
-                    return new Plane(0f, -1f, 0f, pos.Y);
-                else
-                    return new Plane(-1f, 0f, 0f, pos.X);
+                return Orientations.XZplane.Equals(this.orientation) ? 
+                            new Plane(0f, -1f, 0f, pos.Y) : 
+                            new Plane(-1f, 0f, 0f, pos.X);
             }
         }
 
