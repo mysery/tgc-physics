@@ -1,39 +1,36 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using TgcViewer.Utils.TgcSceneLoader;
-using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Body;
-using AlumnoEjemplos.Piguyis.Fisica;
 using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
     public class Escena09 : EscenaBase
     {
+/*
         private const float zLocation = -40.0f;
-        public override void render(float elapsedTime)
+*/
+        public override void Render(float elapsedTime)
         {
-            base.render(elapsedTime * 5f);
+            base.Render(elapsedTime * 5f);
         }
-        protected override void createBodys()
+        protected override void CreateBodys()
         {
             #region Spheres
             
             // creo una grilla de cuerpos.
             const int numberSpheresPerSide = 12;
-            const int MAX_VALUE_RANDOM = 60;            
+            const int maxValueRandom = 60;            
             const float radius = 5.0f;
             const float separationBetweenSpheres = 2.0f;
 
             const float xCentre = 0.0f;
             const float zCentre = -120.0f;
-            float yLocation = 30.0f;
+            const float yLocation = 30.0f;
             Random random = new Random();
 
-            float initialX = xCentre - (((numberSpheresPerSide - 1) * ((radius * 2.0f) + separationBetweenSpheres)) / 2.0f) - (separationBetweenSpheres / 2.0f);
-            float initialZ = zCentre - (((numberSpheresPerSide - 1) * ((radius * 2.0f) + separationBetweenSpheres)) / 2.0f) - (separationBetweenSpheres / 2.0f);
+            const float initialX = xCentre - (((numberSpheresPerSide - 1) * ((radius * 2.0f) + separationBetweenSpheres)) / 2.0f) - (separationBetweenSpheres / 2.0f);
+            const float initialZ = zCentre - (((numberSpheresPerSide - 1) * ((radius * 2.0f) + separationBetweenSpheres)) / 2.0f) - (separationBetweenSpheres / 2.0f);
 
             for (int x = 0; x < numberSpheresPerSide; ++x)
             {
@@ -41,13 +38,13 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                 {
                     BodyBuilder builder = new BodyBuilder(
                                                         new Vector3(initialX + (x * ((radius * 2) + separationBetweenSpheres)),
-                                                                    yLocation + random.Next(MAX_VALUE_RANDOM),
+                                                                    yLocation + random.Next(maxValueRandom),
                                                                     initialZ + (z * ((radius * 2) + separationBetweenSpheres))),
                                                         new Vector3(), 
                                                         1.0f);
                     builder.SetBoundingSphere(radius);
                     builder.SetForces(0.0f, -1.0f, 0.0f);
-                    bodys.Add(builder.Build());
+                    Bodys.Add(builder.Build());
                 }
             }
 
@@ -55,30 +52,30 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
             #region BigSphere
 
-            float radiusBigYLocation = 10f;
-            float radiusBig = 150.0f;
+            const float radiusBigYLocation = 10f;
+            const float radiusBig = 150.0f;
             BodyBuilder bigBuilder = new BodyBuilder(new Vector3(xCentre,
                                                                     -radiusBig + radiusBigYLocation,
                                                                     zCentre),
                                                         new Vector3(),
                                                         float.PositiveInfinity);
             bigBuilder.SetBoundingSphere(radiusBig);
-            bodys.Add(bigBuilder.Build());
+            Bodys.Add(bigBuilder.Build());
             #endregion
         }
 
-        public override void initEscena()
+        public override void InitEscena()
         {
-            base.initEscena();
+            base.InitEscena();
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
         }
 
-        public override string getTitle()
+        public override string GetTitle()
         {
             return "Escena09 - Motor Fisica";
         }
 
-        public override string getDescription()
+        public override string GetDescription()
         {
             return "Muchas esferas posicionadas aleatoria mente son afectadas por una fuerza caen en una gran esfera inmovil.";
         }

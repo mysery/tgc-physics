@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.DirectX;
 
 namespace AlumnoEjemplos.Piguyis.Fisica
@@ -9,7 +6,7 @@ namespace AlumnoEjemplos.Piguyis.Fisica
     {
         #region Variables
 
-        private Vector3 vector;
+        private Vector3 _vector;
         
         #endregion Variables
 
@@ -17,17 +14,17 @@ namespace AlumnoEjemplos.Piguyis.Fisica
 
         public Fuerza()
         {
-            this.vector = new Vector3();
+            this._vector = new Vector3();
         }
 
         public Fuerza(float valueX, float valueY, float valueZ)
         {
-            this.vector = new Vector3(valueX, valueY, valueZ);
+            this._vector = new Vector3(valueX, valueY, valueZ);
         }
 
         public Fuerza(Vector3 pvector)
         {
-            this.vector = pvector;
+            this._vector = pvector;
         }
 
         #endregion Constructor
@@ -36,8 +33,8 @@ namespace AlumnoEjemplos.Piguyis.Fisica
 
         public Vector3 Vector
         {
-            get { return vector; }
-            set { vector = value; }
+            get { return _vector; }
+            set { _vector = value; }
         }
 
         #endregion Accessors

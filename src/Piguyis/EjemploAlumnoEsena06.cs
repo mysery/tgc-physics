@@ -1,17 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TgcViewer.Example;
-using TgcViewer;
-using Microsoft.DirectX.Direct3D;
-using System.Drawing;
-using Microsoft.DirectX;
-using TgcViewer.Utils.Modifiers;
-using TgcViewer.Utils.TgcGeometry;
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer.Utils.TgcSkeletalAnimation;
-using TgcViewer.Utils.Terrain;
-using TgcViewer.Utils.Fog;
 using AlumnoEjemplos.Piguyis.Esenas;
 
 namespace AlumnoEjemplos.Piguyis
@@ -35,7 +22,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getName()
         {
-            return e.getTitle();
+            return e.GetTitle();
         }
 
         /// <summary>
@@ -43,7 +30,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override string getDescription()
         {
-            return e.getDescription();
+            return e.GetDescription();
         }
 
         private IEscena e = new Escena06();
@@ -55,7 +42,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void init()
         {
-            e.initEscena();
+            e.InitEscena();
         }
 
         /// <summary>
@@ -66,7 +53,7 @@ namespace AlumnoEjemplos.Piguyis
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            e.render(elapsedTime);
+            e.Render(elapsedTime);
         }
 
         /// <summary>
@@ -75,7 +62,7 @@ namespace AlumnoEjemplos.Piguyis
         /// </summary>
         public override void close()
         {
-            e.closeEscena();
+            e.CloseEscena();
         }
     }
 }

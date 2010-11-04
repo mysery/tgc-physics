@@ -1,18 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TgcViewer.Utils.TgcSceneLoader;
-using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Body;
-using AlumnoEjemplos.Piguyis.Fisica;
-using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
     public class Escena05 : EscenaBase
     {
-        protected override void createBodys()
+        protected override void CreateBodys()
         {
             const float radius = 20.0f;
 
@@ -21,22 +14,22 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                                                     new Vector3(), 1.0f);
             builderLeft.SetBoundingSphere(radius);
             builderLeft.SetForces(10.0f, 0.0f, 0.0f);
-            bodys.Add(builderLeft.Build());
+            Bodys.Add(builderLeft.Build());
 
             // sphere 2.
             BodyBuilder builderRight = new BodyBuilder(new Vector3(radius * 2, 0.0f, 0.0f),
                                                     new Vector3(), 1.0f);
             builderRight.SetBoundingSphere(radius);
             builderRight.SetForces(-10.0f, 0.0f, 0.0f);
-            bodys.Add(builderRight.Build());
+            Bodys.Add(builderRight.Build());
         }
 
-        public override string getTitle()
+        public override string GetTitle()
         {
             return "Escena05 - Motor Fisica";
         }
 
-        public override string getDescription()
+        public override string GetDescription()
         {
             return "Dos esferas con aceleracion constante (fuerza constante e igual) de la misma masa chocan linealmente y rebotan segun el impulso";
         }

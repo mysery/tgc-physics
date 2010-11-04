@@ -1,23 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TgcViewer.Utils.TgcSceneLoader;
-using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
-using AlumnoEjemplos.Piguyis.Body;
-using AlumnoEjemplos.Piguyis.Fisica;
 using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
     public class Escena04 : EscenaBase
     {
-        private const float zLocation = -40.0f;
-        public override void render(float elapsedTime)
+        private const float ZLocation = -40.0f;
+        public override void Render(float elapsedTime)
         {
-            base.render(elapsedTime * 4f);
+            base.Render(elapsedTime * 4f);
         }
-        protected override void createBodys()
+        protected override void CreateBodys()
         {
             float locationY = -80.0f;
             float locationX = 0.0f;
@@ -45,7 +38,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             for (int i = 0; i < numberOfMovingSpheres; ++i)
             {
                 this.AddBody(Density.Medium,
-                    new Vector3(startingLocationXMoving + (i * 2.0f * radius), locationY, zLocation),
+                    new Vector3(startingLocationXMoving + (i * 2.0f * radius), locationY, ZLocation),
                     new Vector3(2.0f, 0.0f, 0.0f),
                     radius);
             }
@@ -53,7 +46,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             for (int i = 0; i < numberOfStationarySpheres; ++i)
             {
                 this.AddBody(Density.Medium,
-                    new Vector3(startingLocationXStationary + (i * 2.0f * radius), locationY, zLocation),
+                    new Vector3(startingLocationXStationary + (i * 2.0f * radius), locationY, ZLocation),
                     new Vector3(), radius);
             }
         }
@@ -68,31 +61,31 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
             const float movingVelocityX = 2.0f;
             this.AddBody(densityMoving,
-                new Vector3(locationX + initialXLocationMoving, locationY, zLocation),
+                new Vector3(locationX + initialXLocationMoving, locationY, ZLocation),
                 new Vector3(movingVelocityX, 0.0f, 0.0f),
                 radius);
 
             this.AddBody(densityStationaryTop,
-                new Vector3(locationX + initialXLocationStationary, locationY + (radius + (stationarySpheresSeparation) / 2.0f), zLocation),
+                new Vector3(locationX + initialXLocationStationary, locationY + (radius + (stationarySpheresSeparation) / 2.0f), ZLocation),
                 new Vector3(), radius);
 
             this.AddBody(densityStationaryBottom,
-                new Vector3(locationX + initialXLocationStationary, locationY - (radius + (stationarySpheresSeparation) / 2.0f), zLocation),
+                new Vector3(locationX + initialXLocationStationary, locationY - (radius + (stationarySpheresSeparation) / 2.0f), ZLocation),
                 new Vector3(), radius);
         }
 
-        public override void initEscena()
+        public override void InitEscena()
         {
-            base.initEscena();
+            base.InitEscena();
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -250.0f), new Vector3(0.0f, -30.0f, 100.0f));
         }
 
-        public override string getTitle()
+        public override string GetTitle()
         {
             return "Escena04 - Motor Fisica";
         }
 
-        public override string getDescription()
+        public override string GetDescription()
         {
             return "Colicion de objetos en fila que propaga el choque y otros que colicionan en distintos angulos.";
         }

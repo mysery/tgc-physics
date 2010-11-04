@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TgcViewer.Utils.TgcSceneLoader;
-using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Body;
-using AlumnoEjemplos.Piguyis.Fisica;
 using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
     public class Escena12 : EscenaBase
     {
-        public override void render(float elapsedTime)
+        public override void Render(float elapsedTime)
         {
-            base.render(elapsedTime * 2f);
+            base.Render(elapsedTime * 2f);
         }
 
-        protected override void createBodys()
+        protected override void CreateBodys()
         {
             const float radius = 2.0f;
             const float separationDistance = 12.0f;
@@ -42,24 +36,24 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                             builder.SetForces(0.0f, -1.0f, 0.0f);
 
                         builder.SetBoundingSphere(radius);
-                        bodys.Add(builder.Build());
+                        Bodys.Add(builder.Build());
                     }
                 }
             }
         }
 
-        public override void initEscena()
+        public override void InitEscena()
         {
-            base.initEscena();
+            base.InitEscena();
             GuiController.Instance.FpsCamera.setCamera(new Vector3(-50.0f, 25.0f, -100.0f), new Vector3(90.0f, -50.0f, 100.0f));
         }
 
-        public override string getTitle()
+        public override string GetTitle()
         {
             return "Escena12 - Motor Fisica";
         }
 
-        public override string getDescription()
+        public override string GetDescription()
         {
             return "Muchas esferas apiladas en forma de piramide caen sobre esferas inmoviles. con restitucion 0.5";
         }

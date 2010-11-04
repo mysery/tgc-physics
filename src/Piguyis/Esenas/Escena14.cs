@@ -1,18 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TgcViewer.Utils.TgcSceneLoader;
-using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Body;
-using AlumnoEjemplos.Piguyis.Fisica;
 using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
     public class Escena14 : EscenaBase
     {
-        protected override void createBodys()
+        protected override void CreateBodys()
         {
             #region Spheres en grilla
 
@@ -42,7 +36,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                     builder.SetBoundingSphere(radius);
                     builder.SetForces(0.0f, -5.0f, 0.0f);
                     builder.SetRestitution(restitucion);
-                    bodys.Add(builder.Build());
+                    Bodys.Add(builder.Build());
                 }
                 restitucion = restitucion + 0.2f;
             }
@@ -74,24 +68,24 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                                                         new Vector3(),
                                                         float.PositiveInfinity);
                     builder.SetBoundingSphere(radius);
-                    bodys.Add(builder.Build());
+                    Bodys.Add(builder.Build());
                 }
             }
 
             #endregion
         }
-        public override void initEscena()
+        public override void InitEscena()
         {
-            base.initEscena();
+            base.InitEscena();
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -300.0f), new Vector3(0.0f, -50.0f, 100.0f));
         }
 
-        public override string getTitle()
+        public override string GetTitle()
         {
             return "Escena14 - Motor Fisica";
         }
 
-        public override string getDescription()
+        public override string GetDescription()
         {
             return "Esferas alineadas caen sobre una plataforma inclinada. Con restitucion incremental 0.2 a 1.0";
         }

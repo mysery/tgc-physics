@@ -1,13 +1,7 @@
 // Copyright Gary Evans 2006-2008
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using AlumnoEjemplos.Piguyis.Body;
 using Microsoft.DirectX;
-using AlumnoEjemplos.PiguYis.Matematica;
-using TgcViewer;
-using Microsoft.DirectX.Direct3D;
 using AlumnoEjemplos.Piguyis.TGCView;
 
 
@@ -28,45 +22,45 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
         {
             if (radius < 0.0f)
             {
-                throw new ArgumentException("Radius should not be negative", "radius");
+                throw new ArgumentException(@"Radius should not be negative", "radius");
             }
-            sphare = new TgcBoundingSphere(new Vector3(), radius);
+            _sphare = new TgcBoundingSphere(new Vector3(), radius);
         }
 
         #endregion Object Lifetime
 
 
         #region Implements BoundingVolume Methods
-        public override void setPosition(Vector3 position)
+        public override void SetPosition(Vector3 position)
         {
-            sphare.setCenter(position);
+            _sphare.setCenter(position);
         }
 
-        public override Vector3 getPosition()
+        public override Vector3 GetPosition()
         {
-            return sphare.Center;
+            return _sphare.Center;
         }
 
-        public override float getRadius()
+        public override float GetRadius()
         {
-            return sphare.Radius;
+            return _sphare.Radius;
         }
 
         public override void render()
         {            
-            sphare.render();
+            _sphare.render();
         }
 
         public override void dispose()
         {
-            sphare.dispose();
+            _sphare.dispose();
         }
 
         #endregion
 
 		#region Member Variables
 
-        private TgcBoundingSphere sphare;
+        private readonly TgcBoundingSphere _sphare;
 
 		#endregion Member Variables
 

@@ -1,24 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TgcViewer.Utils.TgcSceneLoader;
-using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Body;
-using AlumnoEjemplos.Piguyis.Fisica;
 using TgcViewer;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
     public class Escena08 : EscenaBase
     {
-        private const float zLocation = -40.0f;
-        public override void render(float elapsedTime)
+        public override void Render(float elapsedTime)
         {
-            base.render(elapsedTime * 5f);
+            base.Render(elapsedTime * 5f);
         }
 
-        protected override void createBodys()
+        protected override void CreateBodys()
         {
             #region Spheres moviles
 
@@ -46,7 +39,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                                                         5.0f);
                     builder.SetBoundingSphere(radius);
                     builder.SetForces(0.0f, -1.0f, 0.0f);
-                    bodys.Add(builder.Build());
+                    Bodys.Add(builder.Build());
                 }
             }
 
@@ -72,7 +65,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                                                         new Vector3(),
                                                         float.PositiveInfinity);
                     builder.SetBoundingSphere(radius);
-                    bodys.Add(builder.Build());
+                    Bodys.Add(builder.Build());
                 }
             }
 
@@ -80,31 +73,31 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
             #region BigSphere
 
-            float radiusBigYLocation = 10f; // the y offset for the big sphere
-            float radiusBig = 100.0f;
+            const float radiusBigYLocation = 10f;
+            const float radiusBig = 100.0f;
             BodyBuilder bigBuilder = new BodyBuilder(new Vector3(xCentre,
                                                                     -radiusBig + radiusBigYLocation,
                                                                     zCentre),
                                                         new Vector3(),
                                                         float.PositiveInfinity);
             bigBuilder.SetBoundingSphere(radiusBig);
-            bodys.Add(bigBuilder.Build());
+            Bodys.Add(bigBuilder.Build());
 
             #endregion
         }
 
-        public override void initEscena()
+        public override void InitEscena()
         {
-            base.initEscena();
+            base.InitEscena();
             GuiController.Instance.FpsCamera.setCamera(new Vector3(0.0f, 75.0f, -650.0f), new Vector3(0.0f, -30.0f, 100.0f));
         }
 
-        public override string getTitle()
+        public override string GetTitle()
         {
             return "Escena08 - Motor Fisica";
         }
 
-        public override string getDescription()
+        public override string GetDescription()
         {
             return "Una gran esfera y una grilla de esferas inmoviles, mientras que otra grilla de esferas caen entre las mismas.";
         }
