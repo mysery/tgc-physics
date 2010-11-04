@@ -33,12 +33,8 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
-using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
-using AlumnoEjemplos.PiguYis.Matematica;
 using AlumnoEjemplos.Piguyis.Body;
 
 namespace AlumnoEjemplos.Piguyis.Box2DLitePort
@@ -48,12 +44,12 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
     /// </summary>
     public class Arbiter
     {
-        private RigidBody body1;
-        private RigidBody body2;
-        private Contact contact = null;
+        private readonly RigidBody _body1;
+        private readonly RigidBody _body2;
+        private Contact _contact;
 
         //TODO: variables del mundo no del arbritro....
-        private bool warmStarting = false; //ok, el mundo se lo pasa al arbritro.
+        private readonly bool _warmStarting; //ok, el mundo se lo pasa al arbritro.
         //private float friction = 0.0; todo esto tendria que venir de los cuerpos. (no implementado)
 
         /// <summary>
@@ -63,7 +59,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         {
             get
             {
-                return contact;
+                return _contact;
             }
         }
 
@@ -72,10 +68,10 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         /// </summary>
         public Arbiter(bool warm, Contact contact, RigidBody body1, RigidBody body2)
         {
-            this.warmStarting = warm;
-            this.contact = contact;
-            this.body1 = body1;
-            this.body2 = body2;
+            this._warmStarting = warm;
+            this._contact = contact;
+            this._body1 = body1;
+            this._body2 = body2;
         }
 
         /// <summary>
@@ -87,24 +83,24 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             Debug.Assert(contact != null);
 
             Contact oldContact = null;
-            if (warmStarting)
+            if (_warmStarting)
             {
-                oldContact = this.contact;
+                oldContact = this._contact;
             }
 
-            this.contact = contact;
+            this._contact = contact;
 
             if (oldContact == null)
             {
-                this.contact.AccumulatedNormalImpulse = 0.0f;
-                this.contact.AccumulatedNormalImpulseForPositionBias = 0.0f;
-                this.contact.AccumulatedTangentImpulse = 0.0f;
+                this._contact.AccumulatedNormalImpulse = 0.0f;
+                this._contact.AccumulatedNormalImpulseForPositionBias = 0.0f;
+                this._contact.AccumulatedTangentImpulse = 0.0f;
             }
             else
             {
-                this.contact.AccumulatedNormalImpulse = oldContact.AccumulatedNormalImpulse;
-                this.contact.AccumulatedNormalImpulseForPositionBias = oldContact.AccumulatedNormalImpulseForPositionBias;
-                this.contact.AccumulatedTangentImpulse = oldContact.AccumulatedTangentImpulse;
+                this._contact.AccumulatedNormalImpulse = oldContact.AccumulatedNormalImpulse;
+                this._contact.AccumulatedNormalImpulseForPositionBias = oldContact.AccumulatedNormalImpulseForPositionBias;
+                this._contact.AccumulatedTangentImpulse = oldContact.AccumulatedTangentImpulse;
             }
         }
 
@@ -120,41 +116,41 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             // TODO:
             // biasFactor = world::positionCorrection ? biasFactor : 0.0;
 
-            Debug.Assert(contact != null);
+            Debug.Assert(_contact != null);
 
             //TODO: loop multi-contacts. ahora simplificado.
-            Vector3 r1 = contact.Position - this.body1.Location;
-            Vector3 r2 = contact.Position - this.body2.Location;
+            Vector3 r1 = _contact.Position - this._body1.Location;
+            Vector3 r2 = _contact.Position - this._body2.Location;
 
             // Precompute normal mass, tangent mass, and bias.
-            float rn1 = Vector3.Dot(r1, contact.Normal);
-            float rn2 = Vector3.Dot(r2, contact.Normal);
-            float kNormal = this.body1.inverseMass + this.body2.inverseMass;
+            float rn1 = Vector3.Dot(r1, _contact.Normal);
+            float rn2 = Vector3.Dot(r2, _contact.Normal);
+            float kNormal = this._body1.inverseMass + this._body2.inverseMass;
             kNormal += (Vector3.Dot(r1, r1) - (rn1 * rn1)) + (Vector3.Dot(r2, r2) - (rn2 * rn2));
 
-            contact.MassNormal = 1.0f / kNormal;
+            _contact.MassNormal = 1.0f / kNormal;
 
-            Vector3 tangent = Vector3.Cross(contact.Normal, new Vector3(1.0f, 1.0f, 1.0f));
+            Vector3 tangent = Vector3.Cross(_contact.Normal, new Vector3(1.0f, 1.0f, 1.0f));
             float rt1 = Vector3.Dot(r1, tangent);
             float rt2 = Vector3.Dot(r2, tangent);
-            float kTangent = this.body1.inverseMass + this.body2.inverseMass;
+            float kTangent = this._body1.inverseMass + this._body2.inverseMass;
             kTangent += (Vector3.Dot(r1, r1) - (rt1 * rt1)) + (Vector3.Dot(r2, r2) - (rt2 * rt2));
-            contact.MassTangent = 1.0f / kTangent;
+            _contact.MassTangent = 1.0f / kTangent;
 
             // box2dlite version:
             //contact.Bias = -biasFactor * inverseTimeStep * Math.Min(0.0, contact.Separation + allowedPenetration);
             // de box2d 2.0.1
-            contact.Bias = 0f;
-            if (contact.Separation > 0.0)
+            _contact.Bias = 0f;
+            if (_contact.Separation > 0.0)
             {
-                contact.Bias = -10f * contact.Separation; //TODO: Bias Factor configurable.
+                _contact.Bias = -10f * _contact.Separation; //TODO: Bias Factor configurable.
             }
             // TODO: incluir angular velocity
-            float vrel = Vector3.Dot(contact.Normal, body2.Velocity - body1.Velocity);
+            float vrel = Vector3.Dot(_contact.Normal, _body2.Velocity - _body1.Velocity);
             //const float b2VelocityThreashold = 1f;
             if (vrel < 1f)
             {
-                contact.Bias += -Math.Max(body1.Restitution, body2.Restitution) * vrel;
+                _contact.Bias += -Math.Max(_body1.Restitution, _body2.Restitution) * vrel;
             }
 
             // TODO: if world::accumulateImpulses
@@ -167,24 +163,24 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         public void ApplyImpulse()
         {
             //TODO: todabia no le encontre el uso que le da en Box2D, ^^ lo usa para la velocidad angular.
-            contact.R1 = contact.Position - body1.Location;
-            contact.R2 = contact.Position - body2.Location;
+            _contact.R1 = _contact.Position - _body1.Location;
+            _contact.R2 = _contact.Position - _body2.Location;
 
             //Velocidad relativa
             //TODO: velocidad angular.
             //b2Vec2 dv = v2 + b2Cross(w2, ccp->r2) - v1 - b2Cross(w1, ccp->r1);
-            Vector3 dv = body2.Velocity - body1.Velocity;
+            Vector3 dv = _body2.Velocity - _body1.Velocity;
 
             //impulso normal
-            float vn = Vector3.Dot(dv, contact.Normal);
+            float vn = Vector3.Dot(dv, _contact.Normal);
             //TODO: from box2d 2.0.1
-            float lambda = -contact.MassNormal * (vn - contact.Bias);
+            float lambda = -_contact.MassNormal * (vn - _contact.Bias);
 
             // TODO: from box2d 2.0.1
             float newImpulse = Math.Max(vn + lambda, 0.0f);
             lambda = newImpulse - vn;
             //Aplica impulso al contacto.
-            Vector3 Pn = Vector3.Multiply(contact.Normal, lambda);
+            Vector3 pn = Vector3.Multiply(_contact.Normal, lambda);
 
             // TODO: de box2dlite
             //float dPn = contact.MassNormal * (-vn + contact.Bias);
@@ -194,8 +190,8 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             //// Apply contact impulse
             //Vector Pn = dPn * contact.Normal;
 
-            body1.Velocity = Vector3.Subtract(body1.Velocity, Vector3.Multiply(Pn, body1.inverseMass));
-            body2.Velocity = Vector3.Add(body2.Velocity, Vector3.Multiply(Pn, body2.inverseMass));
+            _body1.Velocity = Vector3.Subtract(_body1.Velocity, Vector3.Multiply(pn, _body1.inverseMass));
+            _body2.Velocity = Vector3.Add(_body2.Velocity, Vector3.Multiply(pn, _body2.inverseMass));
             
             //No entiendo muy bien esta parte.
             // TODO: if world::splitImpulses

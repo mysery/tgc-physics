@@ -1,64 +1,59 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using AlumnoEjemplos.Piguyis.Colisiones;
 using AlumnoEjemplos.Piguyis.Fisica;
 using Microsoft.DirectX;
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer;
-using AlumnoEjemplos.Piguyis.TGCView;
 
 namespace AlumnoEjemplos.Piguyis.Body
 {
     public class BodyBuilder
     {
-        private BoundingVolume bounding;
-        private Vector3 position;
-        private Vector3 velocity;
-        private float mass;
-        private float restitution = DEFAULT_RESTITUTION;
-        private Fuerza forces;
-        private const float DEFAULT_MASS = 1f;
-        private const float DEFAULT_RESTITUTION = 1f;
-        private const float DEFAULT_RADIUS = 5f;
-        private string meshType;
+        private BoundingVolume _bounding;
+        private Vector3 _position;
+        private Vector3 _velocity;
+        private readonly float _mass;
+        private float _restitution = DefaultRestitution;
+        private Fuerza _forces;
+        private const float DefaultMass = 1f;
+        private const float DefaultRestitution = 1f;
+        private const float DefaultRadius = 5f;
+        private string _meshType;
 
         public BodyBuilder()
         {
-            this.position = new Vector3();
-            this.velocity = new Vector3();
-            this.setBoundingSphere(DEFAULT_RADIUS);
-            this.mass = DEFAULT_MASS;
+            this._position = new Vector3();
+            this._velocity = new Vector3();
+            this.SetBoundingSphere(DefaultRadius);
+            this._mass = DefaultMass;
         }
 
         public BodyBuilder(Vector3 initPosition, Vector3 initVelocity, float mass)
         {
-            this.position = initPosition;
-            this.velocity = initVelocity;
+            this._position = initPosition;
+            this._velocity = initVelocity;
             if (mass < 0.0f)
             {
-                throw new ArgumentException("Mass should not be negative", "mass");
+                throw new ArgumentException(@"Mass should not be negative", "mass");
             }
-            this.mass = mass;            
+            this._mass = mass;            
         }
 
-        public void setForces(Vector3 v)
+        public void SetForces(Vector3 v)
         {
-            this.forces = new Fuerza(v);
+            this._forces = new Fuerza(v);
         }
-        public void setForces(float x, float y, float z)
+        public void SetForces(float x, float y, float z)
         {
-            this.forces = new Fuerza(x, y, z);
-        }
-
-        public void setPosition(Vector3 pos)
-        {
-            this.position = pos;
+            this._forces = new Fuerza(x, y, z);
         }
 
-        public void setVelocity(Vector3 vel)
+        public void SetPosition(Vector3 pos)
         {
-            this.velocity = vel;
+            this._position = pos;
+        }
+
+        public void SetVelocity(Vector3 vel)
+        {
+            this._velocity = vel;
         }
         /// <summary>
         /// Asigna un volumen contenedor esferico al cuerpo.
@@ -66,32 +61,37 @@ namespace AlumnoEjemplos.Piguyis.Body
         /// //REFACTOR to setBoundingVolume()
         /// </summary>
         /// <param name="radius"></param>
-        public void setBoundingSphere(float radius)
+        public void SetBoundingSphere(float radius)
         {
-            this.bounding = new BoundingSphere(radius);
-            meshType = MeshPool.SHPERE_TYPE;            
+            this._bounding = new BoundingSphere(radius);
+            _meshType = MeshPool.ShpereType;            
         }
 
-        public RigidBody build()
+        public RigidBody Build()
         {
-            RigidBody rigidBody = new RigidBody(position, velocity, mass);
-            rigidBody.BoundingVolume = bounding;
-            rigidBody.BoundingVolume.setPosition(position);
-            rigidBody.FuersasInternas = forces;
-            rigidBody.Restitution = restitution;
-            rigidBody.MeshType = meshType;
+            RigidBody rigidBody = new RigidBody(_position, _velocity, _mass);
+            rigidBody.BoundingVolume = _bounding;
+            rigidBody.BoundingVolume.setPosition(_position);
+            rigidBody.FuersasInternas = _forces;
+            rigidBody.Restitution = _restitution;
+            rigidBody.MeshType = _meshType;
             return rigidBody;
         }
 
-        public void setRestitution(float res)
+        public void SetRestitution(float res)
         {
-            this.restitution = res;
+            this._restitution = res;
         }
 
-        internal void setBoundingPlane(BoundingPlane.Orientations o )
+        internal void SetBoundingPlane(BoundingPlane.Orientations o)
         {
-            this.bounding = new BoundingPlane(o);
-            this.meshType = null;
+            this._bounding = new BoundingPlane(o);
+            if (o.Equals(BoundingPlane.Orientations.XYplane))
+                this._meshType = MeshPool.PlaneXYType;
+            else if (o.Equals(BoundingPlane.Orientations.XZplane))
+                this._meshType = MeshPool.PlaneXZType;
+            else if (o.Equals(BoundingPlane.Orientations.YZplane))
+                this._meshType = MeshPool.PlaneYZType;
         }
     }
 }

@@ -247,7 +247,7 @@ namespace AlumnoEjemplos.Piguyis.Body
             }
             else
             {
-                MeshPool.Instance.getMeshToRender(this.meshType, this.location, this.BoundingVolume.getRadius()).render();
+                MeshPool.Instance.GetMeshToRender(this.meshType, this.location, this.BoundingVolume.getRadius()).render();
             }            
         }
 

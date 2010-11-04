@@ -28,27 +28,27 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             // sphere 1.
             BodyBuilder builderLeft = new BodyBuilder(new Vector3(-radius * 2, radius * 3, 0.0f),
                                                     new Vector3(), 1.0f);
-            builderLeft.setForces(10f, 0f, 0f);
-            builderLeft.setBoundingSphere(radius);
-            bodys.Add(builderLeft.build());
+            builderLeft.SetForces(10f, 0f, 0f);
+            builderLeft.SetBoundingSphere(radius);
+            bodys.Add(builderLeft.Build());
 
             // sphere 2.
             BodyBuilder builder2 = new BodyBuilder(new Vector3(-radius * 2, 0.0f, 0.0f),
                                                     new Vector3(10.0f, 0.0f, 0.0f), 1.0f);
-            builder2.setBoundingSphere(radius);
-            bodys.Add(builder2.build());
+            builder2.SetBoundingSphere(radius);
+            bodys.Add(builder2.Build());
             
             // sphere 3.
             BodyBuilder builder3 = new BodyBuilder(new Vector3(-radius * 2, -radius * 3, 0.0f),
                                                     new Vector3(10.0f, -5.0f, 0.0f), 1.0f);
-            builder3.setBoundingSphere(radius);
-            bodys.Add(builder3.build());
+            builder3.SetBoundingSphere(radius);
+            bodys.Add(builder3.Build());
 
             //plane
             BodyBuilder builderRight = new BodyBuilder(new Vector3(radius * 2, 0.0f, 0.0f),
                                                     new Vector3(), 1000f);
-            builderRight.setBoundingPlane(BoundingPlane.Orientations.YZplane);
-            bodys.Add(builderRight.build());
+            builderRight.SetBoundingPlane(BoundingPlane.Orientations.YZplane);
+            bodys.Add(builderRight.Build());
         }
     }
 }

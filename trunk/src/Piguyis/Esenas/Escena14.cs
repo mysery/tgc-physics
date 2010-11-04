@@ -39,10 +39,10 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                                                                     initialZ + (z * ((radius * 2) + separationBetweenSpheres))),
                                                         new Vector3(),
                                                         1.0f);
-                    builder.setBoundingSphere(radius);
-                    builder.setForces(0.0f, -5.0f, 0.0f);
-                    builder.setRestitution(restitucion);
-                    bodys.Add(builder.build());
+                    builder.SetBoundingSphere(radius);
+                    builder.SetForces(0.0f, -5.0f, 0.0f);
+                    builder.SetRestitution(restitucion);
+                    bodys.Add(builder.Build());
                 }
                 restitucion = restitucion + 0.2f;
             }
@@ -73,8 +73,8 @@ namespace AlumnoEjemplos.Piguyis.Esenas
                                                                     initialZ + (z * ((radius * 2) + separationBetweenSpheres))),
                                                         new Vector3(),
                                                         float.PositiveInfinity);
-                    builder.setBoundingSphere(radius);
-                    bodys.Add(builder.build());
+                    builder.SetBoundingSphere(radius);
+                    bodys.Add(builder.Build());
                 }
             }
 

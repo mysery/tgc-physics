@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using AlumnoEjemplos.Piguyis.Colisiones;
 using AlumnoEjemplos.PiguYis.Matematica;
 using AlumnoEjemplos.Piguyis.Body;
 using Microsoft.DirectX;
@@ -65,8 +63,8 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
             // sphere 2.
             BodyBuilder builder = new BodyBuilder(initialLocation, initialVelocity, mass);
-            builder.setBoundingSphere(radius);
-            RigidBody result = builder.build();
+            builder.SetBoundingSphere(radius);
+            RigidBody result = builder.Build();
             bodys.Add(result);
             return result;
         }

@@ -31,9 +31,7 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using AlumnoEjemplos.Piguyis.Colisiones;
 using AlumnoEjemplos.Piguyis.Body;
 using AlumnoEjemplos.Piguyis.Estructuras.Octree;
@@ -49,12 +47,13 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
     {
         #region Private Member Variables
        
-        private Octree octreeRigidBodys;
-        private List<RigidBody> rigidBodysList;
-        private Dictionary<ArbiterKey, Arbiter> arbiters = new Dictionary<ArbiterKey, Arbiter>();
-        private static float MAX_RADIUS = 5f;
-        private static float MIN_VALUE = -5f;
-        private static float MAX_VALUE = 5f;
+        private Octree _octreeRigidBodys;
+        private readonly List<RigidBody> _rigidBodysList;
+        private readonly List<Arbiter> _arbiters = new List<Arbiter>();
+        private const float MaxRadius = 5f;
+        private const float MinValue = -5f;
+        private const float MaxValue = 5f;
+        private const int ImpulseIterations = 10; // TODO: configurar
 
         #endregion Private Member Variables
 
@@ -63,40 +62,39 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         /// <summary>
         /// Constructs an instance of <see cref="World" />
         /// </summary>
-        /// <param name="spheres"></param>
+        /// <param name="rigidBodys"></param>
         public World(List<RigidBody> rigidBodys)
         {
-            this.octreeRigidBodys = new Octree(MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, rigidBodys.Count + 20);
+            this._octreeRigidBodys = new Octree(MaxValue, MinValue, MaxValue, MinValue, MaxValue, MinValue, rigidBodys.Count + 20);
             foreach (RigidBody body in rigidBodys)
 	        {
-                this.octreeRigidBodys.AddNode(body.Location, body);
+                this._octreeRigidBodys.AddNode(body.Location, body);
 	        }
-            this.rigidBodysList = rigidBodys;
+            this._rigidBodysList = rigidBodys;
         }
 
         /// <summary>
         /// Constructs an instance of <see cref="World" />
         /// </summary>
-        /// <param name="spheres"></param>
         public World()
         {
-            this.octreeRigidBodys = new Octree(MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, 20);
-            this.rigidBodysList = new List<RigidBody>(20);
+            this._octreeRigidBodys = new Octree(MaxValue, MinValue, MaxValue, MinValue, MaxValue, MinValue, 20);
+            this._rigidBodysList = new List<RigidBody>(20);
         }
 
         #endregion Object Lifetime
 
-        public void addBody(RigidBody body)
+        public void AddBody(RigidBody body)
         {
-            if (rigidBodysList.Count > this.octreeRigidBodys.top.maxItems)
+            if (_rigidBodysList.Count > this._octreeRigidBodys.top.maxItems)
             {
-                this.octreeRigidBodys = new Octree(MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, MAX_VALUE, MIN_VALUE, rigidBodysList.Count + 21);
-                foreach (RigidBody b in rigidBodysList)
-                    this.octreeRigidBodys.AddNode(b.Location, b);
+                this._octreeRigidBodys = new Octree(MaxValue, MinValue, MaxValue, MinValue, MaxValue, MinValue, _rigidBodysList.Count + 21);
+                foreach (RigidBody b in _rigidBodysList)
+                    this._octreeRigidBodys.AddNode(b.Location, b);
             }
 
-            this.octreeRigidBodys.AddNode(body.Location, body);
-            this.rigidBodysList.Add(body);
+            this._octreeRigidBodys.AddNode(body.Location, body);
+            this._rigidBodysList.Add(body);
         }
 
         /// <summary>
@@ -116,9 +114,9 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         /// </summary>
         public void CollidePhase()
         {
-            foreach (RigidBody bodyPivot in rigidBodysList)
+            foreach (RigidBody bodyPivot in _rigidBodysList)
             {
-                ArrayList nearList = octreeRigidBodys.GetNodes(bodyPivot.Location, bodyPivot.BoundingVolume.getRadius() * MAX_RADIUS);
+                ArrayList nearList = _octreeRigidBodys.GetNodes(bodyPivot.Location, bodyPivot.BoundingVolume.getRadius() * MaxRadius);
                 foreach (RigidBody bodyNear in nearList)
                 {
                     if (bodyPivot.Equals(bodyNear) ||
@@ -131,8 +129,8 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
                     if (bodyPivot.BoundingVolume is BoundingSphere && bodyNear.BoundingVolume is BoundingSphere)
                         contact = CollisionManager.testCollision((BoundingSphere)bodyPivot.BoundingVolume,
                                                                                   (BoundingSphere)bodyNear.BoundingVolume,
-                                                                                   bodyPivot.Velocity - bodyNear.Velocity,
-                                                                                   bodyPivot.Aceleracion - bodyNear.Aceleracion);
+                                                                                   bodyPivot.Velocity,
+                                                                                   bodyPivot.Aceleracion);
                     else if (bodyPivot.BoundingVolume is BoundingSphere && bodyNear.BoundingVolume is BoundingPlane)
                                contact = CollisionManager.testCollision((BoundingSphere)bodyPivot.BoundingVolume,
                                                                         (BoundingPlane)bodyNear.BoundingVolume,
@@ -142,30 +140,13 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
                                                                      (BoundingPlane)bodyPivot.BoundingVolume,
                                                                                    bodyNear.Velocity);
 
-                    Arbiter arbiter = new Arbiter(this.WarmStarting, 
-                                                   contact,
-                                                   bodyPivot, bodyNear);
-                    ArbiterKey arbiterKey = new ArbiterKey(bodyPivot, bodyNear);
-
-                    //TODO contact != null es lo mismo que una colision.
-                    if (arbiter.Contact != null)
-                    {
-                        if (!arbiters.ContainsKey(arbiterKey))
-                        {
-                            arbiters.Add(arbiterKey, arbiter);
-                        }
-                        else
-                        {
-                            arbiters[arbiterKey].Update(arbiter.Contact);
-                        }
-                    }
-                    else
-                    {
-                        if (arbiters.ContainsKey(arbiterKey))
-                        {
-                            arbiters.Remove(arbiterKey);
-                        }
-                    }
+                    //TODO contact == null No hay colision.
+                    if (contact == null) continue;
+                    
+                    Arbiter arbiter = new Arbiter(this.WarmStarting,
+                                                  contact,
+                                                  bodyPivot, bodyNear);
+                    _arbiters.Add(arbiter);
                 }
             }
         }
@@ -183,7 +164,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             float inverseTimeStep = timeStep > 0f ? (1f / timeStep) : 0f;
             
             //Calculo de fuerzas.            
-            foreach (RigidBody rigidBody in rigidBodysList)
+            foreach (RigidBody rigidBody in _rigidBodysList)
             {
                 if (float.IsInfinity(rigidBody.Mass))
                 {
@@ -194,7 +175,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             if ((bool)TgcViewer.GuiController.Instance.Modifiers.getValue("applyPhysics"))
             {
                 //Perform pre-steps.
-                foreach (Arbiter arbiter in arbiters.Values)
+                foreach (Arbiter arbiter in _arbiters)
                 {
                     arbiter.PreStep(inverseTimeStep);
                 }
@@ -203,17 +184,16 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
                 //Aca lo agrega el Box2D
 
                 //Perform iterations
-                int numberIterations = 10; // TODO: configurar
-                for (int i = 0; i < numberIterations; ++i)
+                for (int i = 0; i < ImpulseIterations; ++i)
                 {
-                    foreach (Arbiter arbiter in arbiters.Values)
+                    foreach (Arbiter arbiter in _arbiters)
                     {
                         arbiter.ApplyImpulse();
                     }
                 }
             }
             //Calcular Velocidades
-            foreach (RigidBody rigidBody in rigidBodysList)
+            foreach (RigidBody rigidBody in _rigidBodysList)
             {
                 if (float.IsInfinity(rigidBody.Mass))
                 {
@@ -223,12 +203,12 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
                 rigidBody.IntegrateVelocitySI(timeStep);
                 //if (Vector3.Subtract(oldLocation, rigidBody.Location).LengthSq() > 25f)
                 //{
-                    octreeRigidBodys.RemoveNode(oldLocation, rigidBody);
-                    octreeRigidBodys.AddNode(rigidBody.Location, rigidBody);                    
+                    _octreeRigidBodys.RemoveNode(oldLocation, rigidBody);
+                    _octreeRigidBodys.AddNode(rigidBody.Location, rigidBody);                    
                 //}
             }
 
-            arbiters.Clear();
+            _arbiters.Clear();
         }
     }
 }

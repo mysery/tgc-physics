@@ -19,14 +19,14 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             // sphere 1.
             BodyBuilder builderLeft = new BodyBuilder(new Vector3(-radius * 2, 0.0f, 0.0f),
                                                     new Vector3(10.0f, 0.0f, 0.0f), 1.0f);
-            builderLeft.setBoundingSphere(radius);            
-            bodys.Add(builderLeft.build());
+            builderLeft.SetBoundingSphere(radius);            
+            bodys.Add(builderLeft.Build());
 
             // sphere 2.
             BodyBuilder builderRight = new BodyBuilder(new Vector3(radius * 2, 0.0f, 0.0f),
                                                     new Vector3(-10.0f, 0.0f, 0.0f), 1.0f);
-            builderRight.setBoundingSphere(radius);
-            bodys.Add(builderRight.build());
+            builderRight.SetBoundingSphere(radius);
+            bodys.Add(builderRight.Build());
         }
 
         public override string getTitle()
