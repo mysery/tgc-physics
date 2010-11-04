@@ -116,7 +116,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         {
             foreach (RigidBody bodyPivot in _rigidBodysList)
             {
-                ArrayList nearList = _octreeRigidBodys.GetNodes(bodyPivot.Location, bodyPivot.BoundingVolume.getRadius() * MaxRadius);
+                ArrayList nearList = _octreeRigidBodys.GetNodes(bodyPivot.Location, bodyPivot.BoundingVolume.GetRadius() * MaxRadius);
                 foreach (RigidBody bodyNear in nearList)
                 {
                     if (bodyPivot.Equals(bodyNear) ||
@@ -125,20 +125,11 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
                     {   
                         continue;
                     }
-                    Contact contact = null;
-                    if (bodyPivot.BoundingVolume is BoundingSphere && bodyNear.BoundingVolume is BoundingSphere)
-                        contact = CollisionManager.testCollision((BoundingSphere)bodyPivot.BoundingVolume,
-                                                                                  (BoundingSphere)bodyNear.BoundingVolume,
-                                                                                   bodyPivot.Velocity,
-                                                                                   bodyPivot.Aceleracion);
-                    else if (bodyPivot.BoundingVolume is BoundingSphere && bodyNear.BoundingVolume is BoundingPlane)
-                               contact = CollisionManager.testCollision((BoundingSphere)bodyPivot.BoundingVolume,
-                                                                        (BoundingPlane)bodyNear.BoundingVolume,
-                                                                                   bodyPivot.Velocity);
-                    else if (bodyPivot.BoundingVolume is BoundingPlane && bodyNear.BoundingVolume is BoundingSphere)
-                            contact = CollisionManager.testCollision((BoundingSphere)bodyNear.BoundingVolume,
-                                                                     (BoundingPlane)bodyPivot.BoundingVolume,
-                                                                                   bodyNear.Velocity);
+                    Contact contact = CollisionManager.TestCollision(bodyPivot.BoundingVolume,
+                                                                     bodyNear.BoundingVolume,
+                                                                     bodyPivot.Velocity,
+                                                                     bodyPivot.Aceleracion);
+
 
                     //TODO contact == null No hay colision.
                     if (contact == null) continue;

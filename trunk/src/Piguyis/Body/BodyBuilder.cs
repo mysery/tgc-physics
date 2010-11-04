@@ -71,7 +71,7 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             RigidBody rigidBody = new RigidBody(_position, _velocity, _mass);
             rigidBody.BoundingVolume = _bounding;
-            rigidBody.BoundingVolume.setPosition(_position);
+            rigidBody.BoundingVolume.SetPosition(_position);
             rigidBody.FuersasInternas = _forces;
             rigidBody.Restitution = _restitution;
             rigidBody.MeshType = _meshType;

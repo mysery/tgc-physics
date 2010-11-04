@@ -19,19 +19,19 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
         /// <param name="o">Orientacion xy, xz o yz</param>
         public BoundingPlane(Orientations o)
         {
-            orientation = o;
+            _orientation = o;
             if (Orientations.XYplane.Equals(o))
             {
-                normal = new Vector3(0f, 0f, -1f);
-                box = new TgcBoundingBox(new Vector3(-WIDTH, -HEIGTH, 0f), new Vector3(WIDTH, HEIGTH, 0f));
+                _normal = new Vector3(0f, 0f, -1f);
+                _box = new TgcBoundingBox(new Vector3(-Width, -Heigth, 0f), new Vector3(Width, Heigth, 0f));
             }
             else if (Orientations.XZplane.Equals(o)) {
-                normal = new Vector3(0f, -1f, 0f);
-                box = new TgcBoundingBox(new Vector3(-WIDTH, 0f, -HEIGTH), new Vector3(WIDTH, 0f, HEIGTH));
+                _normal = new Vector3(0f, -1f, 0f);
+                _box = new TgcBoundingBox(new Vector3(-Width, 0f, -Heigth), new Vector3(Width, 0f, Heigth));
             }
             else {
-                normal = new Vector3(-1f, 0f, 0f);
-                box = new TgcBoundingBox(new Vector3(0f, -WIDTH, -HEIGTH), new Vector3(0f, WIDTH, HEIGTH));
+                _normal = new Vector3(-1f, 0f, 0f);
+                _box = new TgcBoundingBox(new Vector3(0f, -Width, -Heigth), new Vector3(0f, Width, Heigth));
             }                
         }
 
@@ -41,8 +41,8 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
         /// <param name="n"></param>
         public BoundingPlane(Vector3 n)
         {
-            normal = n;
-            box = new TgcBoundingBox(new Vector3(0f, -WIDTH, -HEIGTH), new Vector3(0f, WIDTH, HEIGTH));
+            _normal = n;
+            _box = new TgcBoundingBox(new Vector3(0f, -Width, -Heigth), new Vector3(0f, Width, Heigth));
         }
 
         public enum Orientations
@@ -67,10 +67,10 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
         {
             get 
             {
-                Vector3 pos = box.calculateBoxCenter();
-                if (Orientations.XYplane.Equals(this.orientation))
+                Vector3 pos = _box.calculateBoxCenter();
+                if (Orientations.XYplane.Equals(this._orientation))
                     return new Plane(0f, 0f, -1f, pos.Z);
-                return Orientations.XZplane.Equals(this.orientation) ? 
+                return Orientations.XZplane.Equals(this._orientation) ? 
                             new Plane(0f, -1f, 0f, pos.Y) : 
                             new Plane(-1f, 0f, 0f, pos.X);
             }
@@ -80,48 +80,48 @@ namespace AlumnoEjemplos.Piguyis.Colisiones
         {
             get
             {
-                return normal;                
+                return _normal;                
             }
             set
             {
-                this.normal = value;
+                this._normal = value;
             }
         }
 
         #region Implements BoundingVolume Methods
-        public override void setPosition(Vector3 position)
+        public override void SetPosition(Vector3 position)
         {
-            box.scaleTranslate(position, new Vector3(1f, 1f, 1f));
+            _box.scaleTranslate(position, new Vector3(1f, 1f, 1f));
         }
 
-        public override Vector3 getPosition()
+        public override Vector3 GetPosition()
         {
-            return box.calculateBoxCenter();
+            return _box.calculateBoxCenter();
         }
 
-        public override float getRadius()
+        public override float GetRadius()
         {
-            return box.calculateBoxRadius();
+            return _box.calculateBoxRadius();
         }
 
         public override void render()
         {            
-            box.render();
+            _box.render();
         }
 
         public override void dispose()
         {
-            box.dispose();
+            _box.dispose();
         }
 
         #endregion
 
 		#region Member Variables
-        private Orientations orientation;
-        private TgcBoundingBox box;
-        private Vector3 normal;
-        private static float HEIGTH = 100f;
-        private static float WIDTH = 100f;
+        private readonly Orientations _orientation;
+        private readonly TgcBoundingBox _box;
+        private Vector3 _normal;
+        private const float Heigth = 100f;
+        private const float Width = 100f;
 
 		#endregion Member Variables
 

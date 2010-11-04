@@ -66,7 +66,6 @@
     <Compile Include="Piguyis\Body\MeshPool.cs" />
     <Compile Include="Piguyis\Body\RigidBody.cs" />
     <Compile Include="Piguyis\Box2DLitePort\Arbiter.cs" />
-    <Compile Include="Piguyis\Box2DLitePort\ArbiterKey.cs" />
     <Compile Include="Piguyis\Box2DLitePort\Contact.cs" />
     <Compile Include="Piguyis\Box2DLitePort\World.cs" />
     <Compile Include="Piguyis\Colisiones\BoundingNullObject.cs" />

@@ -1,21 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TgcViewer.Utils.TgcSceneLoader;
-using AlumnoEjemplos.Piguyis.Colisiones;
 using Microsoft.DirectX;
-using AlumnoEjemplos.Piguyis.Body;
-using AlumnoEjemplos.Piguyis.Fisica;
 
 namespace AlumnoEjemplos.Piguyis.Esenas
 {
     public class Escena03 : EscenaBase
     {
-        public override void render(float elapsedTime)
+        public override void Render(float elapsedTime)
         {
-            base.render(elapsedTime*4f);
+            base.Render(elapsedTime*4f);
         }
-        protected override void createBodys()
+        protected override void CreateBodys()
         {
             float locationY = -78.0f;
             const float radius = 7.0f;
@@ -30,7 +23,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             this.AddBody(Density.Medium, new Vector3(initialStationaryLocationX, locationY, 0f), new Vector3(), radius);
 
             locationY = -34.0f;
-            float radiusForDoubleVolume = radius * 1.2599210499f;
+            const float radiusForDoubleVolume = radius * 1.2599210499f;
             this.AddBody(Density.Low, new Vector3(initialMovingLocationX, locationY, 0f), new Vector3(initialMovingVelocityX,0f, 0f), radius);
             this.AddBody(Density.Low, new Vector3(initialStationaryLocationX + radiusForDoubleVolume - radius, locationY, 0f), new Vector3(), radiusForDoubleVolume);
 
@@ -51,12 +44,12 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             this.AddBody(Density.Low, new Vector3(initialStationaryLocationX, locationY, 0f), new Vector3(), radius);
         }
 
-        public override string getTitle()
+        public override string GetTitle()
         {
             return "Escena03 - Motor Fisica";
         }
 
-        public override string getDescription()
+        public override string GetDescription()
         {
             return "Objetos que colicionan con diferentes masas, Choque linea contra objetos quietos.";
         }

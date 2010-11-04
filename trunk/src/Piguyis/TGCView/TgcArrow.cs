@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.DirectX.Direct3D;
 using System.Drawing;
 using Microsoft.DirectX;
+using TgcViewer;
+using TgcViewer.Utils;
 using TgcViewer.Utils.TgcSceneLoader;
 using AlumnoEjemplos.PiguYis.Matematica;
 
-namespace TgcViewer.Utils.TgcGeometry
+namespace AlumnoEjemplos.Piguyis.TGCView
 {
     /// <summary>
     /// Herramienta para dibujar una flecha 3D.
@@ -23,11 +22,11 @@ namespace TgcViewer.Utils.TgcGeometry
         /// <param name="start">Punto de inicio</param>
         /// <param name="end">Punto de fin</param>
         /// <returns>Flecha creada</returns>
-        public static TgcArrow fromExtremes(Vector3 start, Vector3 end)
+        public static TgcArrow FromExtremes(Vector3 start, Vector3 end)
         {
             TgcArrow arrow = new TgcArrow();
-            arrow.pStart = start;
-            arrow.pEnd = end;
+            arrow._pStart = start;
+            arrow._pEnd = end;
             return arrow;
         }
 
@@ -41,15 +40,15 @@ namespace TgcViewer.Utils.TgcGeometry
         /// <param name="thickness">Grosor del cuerpo de la flecha</param>
         /// <param name="headSize">Tamaño de la punta de la flecha</param>
         /// <returns>Flecha creada</returns>
-        public static TgcArrow fromExtremes(Vector3 start, Vector3 end, Color bodyColor, Color headColor, float thickness, Vector2 headSize)
+        public static TgcArrow FromExtremes(Vector3 start, Vector3 end, Color bodyColor, Color headColor, float thickness, Vector2 headSize)
         {
             TgcArrow arrow = new TgcArrow();
-            arrow.pStart = start;
-            arrow.pEnd = end;
-            arrow.bodyColor = bodyColor;
-            arrow.headColor = headColor;
-            arrow.thickness = thickness;
-            arrow.headSize = headSize;
+            arrow._pStart = start;
+            arrow._pEnd = end;
+            arrow._bodyColor = bodyColor;
+            arrow._headColor = headColor;
+            arrow._thickness = thickness;
+            arrow._headSize = headSize;
             return arrow;
         }
 
@@ -59,11 +58,11 @@ namespace TgcViewer.Utils.TgcGeometry
         /// <param name="start">Punto de inicio</param>
         /// <param name="direction">Dirección de la flecha</param>
         /// <returns>Flecha creada</returns>
-        public static TgcArrow fromDirection(Vector3 start, Vector3 direction)
+        public static TgcArrow FromDirection(Vector3 start, Vector3 direction)
         {
             TgcArrow arrow = new TgcArrow();
-            arrow.pStart = start;
-            arrow.pEnd = start + direction;
+            arrow._pStart = start;
+            arrow._pEnd = start + direction;
             return arrow;
         }
 
@@ -77,145 +76,144 @@ namespace TgcViewer.Utils.TgcGeometry
         /// <param name="thickness">Grosor del cuerpo de la flecha</param>
         /// <param name="headSize">Tamaño de la punta de la flecha</param>
         /// <returns>Flecha creada</returns>
-        public static TgcArrow fromDirection(Vector3 start, Vector3 direction, Color bodyColor, Color headColor, float thickness, Vector2 headSize)
+        public static TgcArrow FromDirection(Vector3 start, Vector3 direction, Color bodyColor, Color headColor, float thickness, Vector2 headSize)
         {
             TgcArrow arrow = new TgcArrow();
-            arrow.pStart = start;
-            arrow.pEnd = start + direction;
-            arrow.bodyColor = bodyColor;
-            arrow.headColor = headColor;
-            arrow.thickness = thickness;
-            arrow.headSize = headSize;
+            arrow._pStart = start;
+            arrow._pEnd = start + direction;
+            arrow._bodyColor = bodyColor;
+            arrow._headColor = headColor;
+            arrow._thickness = thickness;
+            arrow._headSize = headSize;
             return arrow;
         }
 
         #endregion
 
         #region Atributes
-        private bool dirtyValues;
-        private float oldLineLength;
-        VertexBuffer vertexBuffer;
-
-        Vector3 pStart;
+        private bool _dirtyValues;
+        private float _oldLineLength;
+        private readonly VertexBuffer _vertexBuffer;
+        private Vector3 _pStart;
         /// <summary>
         /// Punto de inicio de la linea
         /// </summary>
         public Vector3 PStart
         {
-            get { return pStart; }
+            get { return _pStart; }
             set
             {
-                pStart = value;
-                dirtyValues = true;
+                _pStart = value;
+                _dirtyValues = true;
             }
         }
 
-        Vector3 pEnd;
+        private Vector3 _pEnd;
         /// <summary>
         /// Punto final de la linea
         /// </summary>
         public Vector3 PEnd
         {
-            get { return pEnd; }
+            get { return _pEnd; }
             set
             {
-                pEnd = value;
-                dirtyValues = true;
+                _pEnd = value;
+                _dirtyValues = true;
             }
         }
 
-        Color bodyColor;
+        private Color _bodyColor;
         /// <summary>
         /// Color del cuerpo de la flecha
         /// </summary>
         public Color BodyColor
         {
-            get { return bodyColor; }
+            get { return _bodyColor; }
             set
             {
-                bodyColor = value;
-                dirtyValues = true;
+                _bodyColor = value;
+                _dirtyValues = true;
             }
         }
 
-        Color headColor;
+        private Color _headColor;
         /// <summary>
         /// Color de la cabeza de la flecha
         /// </summary>
         public Color HeadColor
         {
-            get { return headColor; }
+            get { return _headColor; }
             set
             {
-                headColor = value;
-                dirtyValues = true;
+                _headColor = value;
+                _dirtyValues = true;
             }
         }
 
-        private bool enabled;
+        private bool _enabled;
         /// <summary>
         /// Indica si la flecha esta habilitada para ser renderizada
         /// </summary>
         public bool Enabled
         {
-            get { return enabled; }
-            set { enabled = value; }
+            get { return _enabled; }
+            set { _enabled = value; }
         }
 
-        private float thickness;
+        private float _thickness;
         /// <summary>
         /// Grosor del cuerpo de la flecha. Debe ser mayor a cero.
         /// </summary>
         public float Thickness
         {
-            get { return thickness; }
-            set { thickness = value; dirtyValues = true; }
+            get { return _thickness; }
+            set { _thickness = value; _dirtyValues = true; }
         }
 
-        private Vector2 headSize;
+        private Vector2 _headSize;
         /// <summary>
         /// Tamaño de la cabeza de la flecha. Debe ser mayor a cero.
         /// </summary>
         public Vector2 HeadSize
         {
-            get { return headSize; }
-            set { headSize = value; dirtyValues = true; }
+            get { return _headSize; }
+            set { _headSize = value; _dirtyValues = true; }
         }
         #endregion
 
 
         public TgcArrow()
         {
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            Device d3DDevice = GuiController.Instance.D3dDevice;
 
-            vertexBuffer = new VertexBuffer(typeof(CustomVertex.PositionColored), 54, d3dDevice,
+            _vertexBuffer = new VertexBuffer(typeof(CustomVertex.PositionColored), 54, d3DDevice,
                 Usage.Dynamic | Usage.WriteOnly, CustomVertex.PositionColored.Format, Pool.Default);
 
-            this.thickness = 0.06f;
-            this.headSize = new Vector2(0.3f, 0.6f);
-            this.enabled = true;
-            this.bodyColor = Color.Blue;
-            this.headColor = Color.LightBlue;
-            this.dirtyValues = true;
+            this._thickness = 0.06f;
+            this._headSize = new Vector2(0.3f, 0.6f);
+            this._enabled = true;
+            this._bodyColor = Color.Blue;
+            this._headColor = Color.LightBlue;
+            this._dirtyValues = true;
         }
 
         /// <summary>
         /// Actualizar parámetros de la flecha en base a los valores configurados
         /// </summary>
-        public void updateValues()
+        public void UpdateValues()
         {
             //Crear caja en vertical en Y con longitud igual al módulo de la recta.
-            Vector3 lineVec = Vector3.Subtract(pEnd, pStart);
+            Vector3 lineVec = Vector3.Subtract(_pEnd, _pStart);
             float lineLength = lineVec.Length();
-            if (oldLineLength.Equals(lineLength))
+            if (_oldLineLength.Equals(lineLength))
                 return;//Optimisacion, solo se recalgula si cambia el tamaño.
-            oldLineLength = lineLength;
-            Vector3 min = new Vector3(-thickness, 0, -thickness);
-            Vector3 max = new Vector3(thickness, lineLength, thickness);
+            _oldLineLength = lineLength;
+            Vector3 min = new Vector3(-_thickness, 0, -_thickness);
+            Vector3 max = new Vector3(_thickness, lineLength, _thickness);
 
             CustomVertex.PositionColored[] vertices = new CustomVertex.PositionColored[54];
             //Vertices del cuerpo de la flecha
-            int bc = bodyColor.ToArgb();
+            int bc = _bodyColor.ToArgb();
             // Front face
             vertices[0] = new CustomVertex.PositionColored(min.X, max.Y, max.Z, bc);
             vertices[1] = new CustomVertex.PositionColored(min.X, min.Y, max.Z, bc);
@@ -266,9 +264,9 @@ namespace TgcViewer.Utils.TgcGeometry
 
 
             //Vertices del cuerpo de la flecha
-            int hc = headColor.ToArgb();
-            Vector3 hMin = new Vector3(-headSize.X, lineLength, -headSize.X);
-            Vector3 hMax = new Vector3(headSize.X, lineLength + headSize.Y, headSize.X);
+            int hc = _headColor.ToArgb();
+            Vector3 hMin = new Vector3(-_headSize.X, lineLength, -_headSize.X);
+            Vector3 hMax = new Vector3(_headSize.X, lineLength + _headSize.Y, _headSize.X);
 
             //Bottom face
             vertices[36] = new CustomVertex.PositionColored(hMin.X, hMin.Y, hMax.Z, hc);
@@ -309,10 +307,10 @@ namespace TgcViewer.Utils.TgcGeometry
 			//}
 
             //Cargar vertexBuffer
-            vertexBuffer.SetData(vertices, 0, LockFlags.None);
+            _vertexBuffer.SetData(vertices, 0, LockFlags.None);
         }
 
-        private Matrix getTransform(Vector3 lineVec)
+        private Matrix GetTransform(Vector3 lineVec)
         {
             //Obtener matriz de rotacion respecto del vector de la linea
             lineVec.Normalize();
@@ -320,71 +318,71 @@ namespace TgcViewer.Utils.TgcGeometry
             float angle = FastMath.Acos(Vector3.Dot(originalDir, lineVec));
             Vector3 axisRotation = Vector3.Cross(originalDir, lineVec);
             axisRotation.Normalize();            
-            return Matrix.RotationAxis(axisRotation, angle) * Matrix.Translation(pStart);
+            return Matrix.RotationAxis(axisRotation, angle) * Matrix.Translation(_pStart);
         }
 
-        private Vector3 IDENTITYZ = new Vector3(0f, 0f, 1f);
-        private Vector3 IDENTITYY = new Vector3(0f, 1f, 0f);
-        private Vector3 IDENTITYX = new Vector3(1f, 0f, 0f);
-        /// <summary>
-        /// Mi version de transformada. no me esta andando.
-        /// </summary>
-        /// <returns></returns>
-        private Matrix getTransform()
-        {
-            Vector3 v1 = IDENTITYX;
-            Vector3 v2 = IDENTITYY;
-            Vector3 v3 = Vector3.Subtract(pEnd, pStart);
-            v3.Normalize();
-
-            //if (Vector3.Dot(v3, IDENTITYZ) != 0f)
-            //{
-            v1 = Vector3.Cross(v3, IDENTITYZ);
-            v1.Normalize();
-            v2 = Vector3.Cross(v3, v1);
-            v2.Normalize();
-  /*          }
-            else
-            {   
-                if (Vector3.Dot(v3, IDENTITYX) != 0f)
-                {
-                    v1 = Vector3.Cross(v3, IDENTITYX);
-                    v1.Normalize();
-                    v2 = Vector3.Cross(v3, v1);
-                    v2.Normalize();
-                }
-            }*/
-
-            Matrix mx = new Matrix();
-            mx.M11 = v1.X; mx.M12 = v2.X; mx.M13 = v3.X;
-            mx.M21 = v1.Y; mx.M22 = v2.Y; mx.M23 = v3.Y;
-            mx.M31 = v1.Z; mx.M32 = v2.Z; mx.M33 = v3.Z;
-            mx.M44 = 1f;
-
-            return mx * Matrix.Translation(pStart);
-        }
+//        private static Vector3 IDENTITYZ = new Vector3(0f, 0f, 1f);
+//        private static Vector3 IDENTITYY = new Vector3(0f, 1f, 0f);
+//        private static Vector3 IDENTITYX = new Vector3(1f, 0f, 0f);
+//        /// <summary>
+//        /// Mi version de transformada. no me esta andando.
+//        /// </summary>
+//        /// <returns></returns>
+//        private Matrix GetTransform()
+//        {
+//            Vector3 v1 = IDENTITYX;
+//            Vector3 v2 = IDENTITYY;
+//            Vector3 v3 = Vector3.Subtract(_pEnd, _pStart);
+//            v3.Normalize();
+//
+//            //if (Vector3.Dot(v3, IDENTITYZ) != 0f)
+//            //{
+//            v1 = Vector3.Cross(v3, IDENTITYZ);
+//            v1.Normalize();
+//            v2 = Vector3.Cross(v3, v1);
+//            v2.Normalize();
+//  /*          }
+//            else
+//            {   
+//                if (Vector3.Dot(v3, IDENTITYX) != 0f)
+//                {
+//                    v1 = Vector3.Cross(v3, IDENTITYX);
+//                    v1.Normalize();
+//                    v2 = Vector3.Cross(v3, v1);
+//                    v2.Normalize();
+//                }
+//            }*/
+//
+//            Matrix mx = new Matrix();
+//            mx.M11 = v1.X; mx.M12 = v2.X; mx.M13 = v3.X;
+//            mx.M21 = v1.Y; mx.M22 = v2.Y; mx.M23 = v3.Y;
+//            mx.M31 = v1.Z; mx.M32 = v2.Z; mx.M33 = v3.Z;
+//            mx.M44 = 1f;
+//
+//            return mx * Matrix.Translation(_pStart);
+//        }
 
         /// <summary>
         /// Renderizar la flecha
         /// </summary>
         public void render()
         {
-            if (dirtyValues)
+            if (_dirtyValues)
             {
-                updateValues();
-                dirtyValues = false;
+                UpdateValues();
+                _dirtyValues = false;
             }
 
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            Device d3DDevice = GuiController.Instance.D3dDevice;
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
 
             texturesManager.clear(0);
-            d3dDevice.Material = TgcD3dDevice.DEFAULT_MATERIAL;
-            d3dDevice.Transform.World = this.getTransform(Vector3.Subtract(pEnd, pStart));
+            d3DDevice.Material = TgcD3dDevice.DEFAULT_MATERIAL;
+            d3DDevice.Transform.World = this.GetTransform(Vector3.Subtract(_pEnd, _pStart));
 
-            d3dDevice.VertexFormat = CustomVertex.PositionColored.Format;
-            d3dDevice.SetStreamSource(0, vertexBuffer, 0);
-            d3dDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 18);
+            d3DDevice.VertexFormat = CustomVertex.PositionColored.Format;
+            d3DDevice.SetStreamSource(0, _vertexBuffer, 0);
+            d3DDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 18);
         }
 
         /// <summary>
@@ -392,9 +390,9 @@ namespace TgcViewer.Utils.TgcGeometry
         /// </summary>
         public void dispose()
         {
-            if (vertexBuffer != null && !vertexBuffer.Disposed)
+            if (_vertexBuffer != null && !_vertexBuffer.Disposed)
             {
-                vertexBuffer.Dispose();
+                _vertexBuffer.Dispose();
             }
         }
 

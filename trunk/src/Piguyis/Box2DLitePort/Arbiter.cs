@@ -47,6 +47,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
         private readonly RigidBody _body1;
         private readonly RigidBody _body2;
         private Contact _contact;
+        private const float B2VelocityThreashold = 1f;
 
         //TODO: variables del mundo no del arbritro....
         private readonly bool _warmStarting; //ok, el mundo se lo pasa al arbritro.
@@ -125,7 +126,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             // Precompute normal mass, tangent mass, and bias.
             float rn1 = Vector3.Dot(r1, _contact.Normal);
             float rn2 = Vector3.Dot(r2, _contact.Normal);
-            float kNormal = this._body1.inverseMass + this._body2.inverseMass;
+            float kNormal = this._body1.InverseMass + this._body2.InverseMass;
             kNormal += (Vector3.Dot(r1, r1) - (rn1 * rn1)) + (Vector3.Dot(r2, r2) - (rn2 * rn2));
 
             _contact.MassNormal = 1.0f / kNormal;
@@ -133,7 +134,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             Vector3 tangent = Vector3.Cross(_contact.Normal, new Vector3(1.0f, 1.0f, 1.0f));
             float rt1 = Vector3.Dot(r1, tangent);
             float rt2 = Vector3.Dot(r2, tangent);
-            float kTangent = this._body1.inverseMass + this._body2.inverseMass;
+            float kTangent = this._body1.InverseMass + this._body2.InverseMass;
             kTangent += (Vector3.Dot(r1, r1) - (rt1 * rt1)) + (Vector3.Dot(r2, r2) - (rt2 * rt2));
             _contact.MassTangent = 1.0f / kTangent;
 
@@ -147,8 +148,7 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             }
             // TODO: incluir angular velocity
             float vrel = Vector3.Dot(_contact.Normal, _body2.Velocity - _body1.Velocity);
-            //const float b2VelocityThreashold = 1f;
-            if (vrel < 1f)
+            if (vrel < B2VelocityThreashold)
             {
                 _contact.Bias += -Math.Max(_body1.Restitution, _body2.Restitution) * vrel;
             }
@@ -190,8 +190,8 @@ namespace AlumnoEjemplos.Piguyis.Box2DLitePort
             //// Apply contact impulse
             //Vector Pn = dPn * contact.Normal;
 
-            _body1.Velocity = Vector3.Subtract(_body1.Velocity, Vector3.Multiply(pn, _body1.inverseMass));
-            _body2.Velocity = Vector3.Add(_body2.Velocity, Vector3.Multiply(pn, _body2.inverseMass));
+            _body1.Velocity = Vector3.Subtract(_body1.Velocity, Vector3.Multiply(pn, _body1.InverseMass));
+            _body2.Velocity = Vector3.Add(_body2.Velocity, Vector3.Multiply(pn, _body2.InverseMass));
             
             //No entiendo muy bien esta parte.
             // TODO: if world::splitImpulses

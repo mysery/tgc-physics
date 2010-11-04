@@ -1,9 +1,5 @@
 // Copyright Gary Evans 2006-2008
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace AlumnoEjemplos.Piguyis.Colisiones
 {
     /// <summary>

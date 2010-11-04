@@ -10,19 +10,19 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 {
     public abstract class EscenaBase : IEscena
     {
-        protected List<RigidBody> bodys;
-        protected World world = null;
+        protected List<RigidBody> Bodys;
+        protected World World;
 
         #region Implementacion IEsena
         
-        public abstract String getTitle();
-        public abstract String getDescription();
+        public abstract String GetTitle();
+        public abstract String GetDescription();
         
-        public virtual void initEscena()
+        public virtual void InitEscena()
         {
-            bodys = new List<RigidBody>();
-            this.createBodys();
-            this.world = new World(bodys);
+            Bodys = new List<RigidBody>();
+            this.CreateBodys();
+            this.World = new World(Bodys);
 
             GuiController.Instance.FpsCamera.Enable = true;
             GuiController.Instance.FpsCamera.MovementSpeed = 100f;
@@ -34,21 +34,21 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             GuiController.Instance.Modifiers.addBoolean("applyPhysics", "Calculos fisicos", true);
         }
 
-        protected abstract void createBodys();
+        protected abstract void CreateBodys();
 
-        public virtual void render(float elapsedTime)
+        public virtual void Render(float elapsedTime)
         {
-            this.world.Step(elapsedTime);
+            this.World.Step(elapsedTime);
 
-            foreach (RigidBody body in bodys)
+            foreach (RigidBody body in Bodys)
             {
                 body.render();
             }
         }
 
-        public virtual void closeEscena()
+        public virtual void CloseEscena()
         {
-            foreach (RigidBody body in bodys)
+            foreach (RigidBody body in Bodys)
             {
                 body.dispose();
             }
@@ -65,7 +65,7 @@ namespace AlumnoEjemplos.Piguyis.Esenas
             BodyBuilder builder = new BodyBuilder(initialLocation, initialVelocity, mass);
             builder.SetBoundingSphere(radius);
             RigidBody result = builder.Build();
-            bodys.Add(result);
+            Bodys.Add(result);
             return result;
         }
             

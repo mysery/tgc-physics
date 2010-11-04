@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
+using AlumnoEjemplos.Piguyis.TGCView;
 using Microsoft.DirectX;
 using AlumnoEjemplos.Piguyis.Fisica;
-using TgcViewer.Utils.TgcGeometry;
 using AlumnoEjemplos.Piguyis.Colisiones;
 using TgcViewer.Utils.TgcSceneLoader;
 using System.Drawing;
@@ -15,16 +13,16 @@ namespace AlumnoEjemplos.Piguyis.Body
         
         #region Variables
 
-        private float mass;
-        private float restitution = 1.0f;
-        private Fuerza fuersasInternas;
-        private Fuerza fuersasExternas = new Fuerza();
-        private TgcArrow debugForce;
-        private Vector3 location = new Vector3();
-        private Vector3 velocity = new Vector3();
-        private TgcArrow debugVelocity;
-        private BoundingVolume boundingVolume = new BoundingNullObject();
-        private string meshType;
+        private readonly float _mass;
+        private float _restitution = 1.0f;
+        private Fuerza _fuersasInternas;
+        private Fuerza _fuersasExternas = new Fuerza();
+        private readonly TgcArrow _debugForce;
+        private Vector3 _location;
+        private Vector3 _velocity;
+        private readonly TgcArrow _debugVelocity;
+        private BoundingVolume _boundingVolume = new BoundingNullObject();
+        private string _meshType;
 
         /// <summary>
         /// The biased velocity (velocidad parcial) - see the Box2D Port classes.
@@ -41,18 +39,18 @@ namespace AlumnoEjemplos.Piguyis.Body
         /// <param name="location">posicion inical</param>
         /// <param name="velocity">velocidad inicial</param>
         /// <param name="mass">masa</param>
-        public RigidBody(Vector3 location, Vector3 velocity, float masa)
+        public RigidBody(Vector3 location, Vector3 velocity, float mass)
         {
-            if (masa == 0.0)
+            if (mass <= 0f)
             {
                 throw new ArgumentException("mass cannot be zero");
             }
 
-            this.location = location;
-            this.velocity = velocity;
-            this.mass = masa;
-            this.debugVelocity = TgcArrow.fromDirection(location, velocity, Color.Green, Color.Green, 0.1f, new Vector2(0.6f, 1.2f));
-            this.debugForce = TgcArrow.fromDirection(location, (this.fuersasInternas == null)? new Vector3():this.fuersasInternas.Vector, Color.Red, Color.Red, 0.1f, new Vector2(0.6f, 1.2f));
+            this._location = location;
+            this._velocity = velocity;
+            this._mass = mass;
+            this._debugVelocity = TgcArrow.FromDirection(location, velocity, Color.Green, Color.Green, 0.1f, new Vector2(0.6f, 1.2f));
+            this._debugForce = TgcArrow.FromDirection(location, (this._fuersasInternas == null)? new Vector3():this._fuersasInternas.Vector, Color.Red, Color.Red, 0.1f, new Vector2(0.6f, 1.2f));
         }
 
         #endregion Constructor
@@ -62,11 +60,11 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             get
             {
-                return this.meshType;
+                return this._meshType;
             }
             set
             {
-                this.meshType = value;
+                this._meshType = value;
             }
         }
 
@@ -74,11 +72,11 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             get
             {
-                return this.boundingVolume;
+                return this._boundingVolume;
             }
             set
             {
-                this.boundingVolume = value;
+                this._boundingVolume = value;
             }
         }
         
@@ -86,15 +84,15 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             get
             {
-                return this.location;
+                return this._location;
             }
             set
             {
-                this.location = value;
-                boundingVolume.setPosition(this.location);                
-                this.debugVelocity.PStart = this.location;
-                this.debugForce.PStart = this.location;
-                this.debugForce.PEnd = this.location + ((this.fuersasInternas == null) ? new Vector3() : this.fuersasInternas.Vector);
+                this._location = value;
+                _boundingVolume.SetPosition(this._location);                
+                this._debugVelocity.PStart = this._location;
+                this._debugForce.PStart = this._location;
+                this._debugForce.PEnd = this._location + ((this._fuersasInternas == null) ? new Vector3() : this._fuersasInternas.Vector);
             }
         }
 
@@ -105,12 +103,12 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             get
             {
-                return this.velocity;
+                return this._velocity;
             }
             set
             {
-                this.velocity = value;
-                this.debugVelocity.PEnd = this.location + this.velocity;
+                this._velocity = value;
+                this._debugVelocity.PEnd = this._location + this._velocity;
             }
         }
 
@@ -121,11 +119,11 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             get
             {
-                if (this.fuersasInternas == null)// || fuersasExternas == null)
+                if (this._fuersasInternas == null)// || fuersasExternas == null)
                 {
                     return new Vector3();
                 }//+ fuersasExternas TODO fuerzas externas!!!
-                return (fuersasInternas * this.inverseMass).Vector;
+                return (_fuersasInternas * this.InverseMass).Vector;
             }
         }
 
@@ -133,23 +131,23 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             get
             {
-                return this.fuersasInternas;
+                return this._fuersasInternas;
             }
             set
             {
-                this.fuersasInternas = value;
-                this.debugForce.PEnd = this.location + ((this.fuersasInternas == null) ? new Vector3() : this.fuersasInternas.Vector);
+                this._fuersasInternas = value;
+                this._debugForce.PEnd = this._location + ((this._fuersasInternas == null) ? new Vector3() : this._fuersasInternas.Vector);
             }
         }
         public Fuerza FuersasExternas
         {
             get
             {
-                return this.fuersasExternas;
+                return this._fuersasExternas;
             }
             set
             {
-                this.fuersasExternas = value;
+                this._fuersasExternas = value;
             }
         }
         /// <summary>
@@ -159,18 +157,18 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             get
             {
-                return this.mass;
+                return this._mass;
             }
         }
         
         /// <summary>
         /// Returns the inverse mass.
         /// </summary>
-        public float inverseMass
+        public float InverseMass
         {
             get
             {
-                return 1f/this.mass;
+                return 1f/this._mass;
             }
         }
 
@@ -182,11 +180,11 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             get
             {
-                return restitution;
+                return _restitution;
             }
             set
             {
-                restitution = value;
+                _restitution = value;
             }
         }
 
@@ -211,7 +209,7 @@ namespace AlumnoEjemplos.Piguyis.Body
         /// <param name="deltaTime"></param>
         public void IntegrateForceSI(float deltaTime)
         {
-            this.Velocity = Vector3.Add(this.Velocity, Vector3.Multiply(this.Aceleracion, (float)deltaTime));
+            this.Velocity = Vector3.Add(this.Velocity, Vector3.Multiply(this.Aceleracion, deltaTime));
             // TODO: angular velocity
 
             //Biased velocities are reset to zero each step.            
@@ -226,8 +224,8 @@ namespace AlumnoEjemplos.Piguyis.Body
         {
             this.Location = Vector3.Add(this.Location,
                                         Vector3.Multiply(
-                                                    Vector3.Add(velocity, BiasedVelocity), 
-                                                    (float)deltaTime));
+                                                    Vector3.Add(_velocity, BiasedVelocity), 
+                                                    deltaTime));
             //TODO: rotacion
             //TODO: reset fuerza?
             //TODO: reset torque?
@@ -242,20 +240,20 @@ namespace AlumnoEjemplos.Piguyis.Body
             if ((bool)TgcViewer.GuiController.Instance.Modifiers.getValue("debugMode"))
             {
                 this.BoundingVolume.render();
-                this.debugVelocity.render();
-                this.debugForce.render();
+                this._debugVelocity.render();
+                this._debugForce.render();
             }
             else
             {
-                MeshPool.Instance.GetMeshToRender(this.meshType, this.location, this.BoundingVolume.getRadius()).render();
+                MeshPool.Instance.GetMeshToRender(this._meshType, this._location, this.BoundingVolume.GetRadius()).render();
             }            
         }
 
         public void dispose()
         {
             this.BoundingVolume.dispose();
-            this.debugVelocity.dispose();
-            this.debugForce.render();
+            this._debugVelocity.dispose();
+            this._debugForce.render();
         }
 
         #endregion
