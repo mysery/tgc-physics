@@ -63,7 +63,15 @@ namespace AlumnoEjemplos.Piguyis.Esenas
 
             // sphere 2.
             BodyBuilder builder = new BodyBuilder(initialLocation, initialVelocity, mass);
-            builder.SetBoundingSphere(radius);
+            if (Density.Heavy.Equals(density))
+                builder.SetBoundingSphere(radius, MeshPool.ShpereHeavyType);
+            else if (Density.High.Equals(density))
+                builder.SetBoundingSphere(radius, MeshPool.ShpereHighType);
+            else if (Density.Medium.Equals(density))
+                builder.SetBoundingSphere(radius, MeshPool.ShpereMediumType);
+            else if (Density.Low.Equals(density))
+                builder.SetBoundingSphere(radius, MeshPool.ShpereLowType);
+            
             RigidBody result = builder.Build();
             Bodys.Add(result);
             return result;

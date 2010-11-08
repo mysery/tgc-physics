@@ -67,6 +67,12 @@ namespace AlumnoEjemplos.Piguyis.Body
             _meshType = MeshPool.ShpereType;            
         }
 
+        public void SetBoundingSphere(float radius, string meshType)
+        {
+            this._bounding = new BoundingSphere(radius);
+            _meshType = meshType;
+        }
+
         public RigidBody Build()
         {
             RigidBody rigidBody = new RigidBody(_position, _velocity, _mass);

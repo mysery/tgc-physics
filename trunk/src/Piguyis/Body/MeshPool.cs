@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using TgcViewer.Utils.TgcGeometry;
 using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer;
@@ -13,18 +14,52 @@ namespace AlumnoEjemplos.Piguyis.Body
         
         private const float MeshShpereSize = 0.1375f;
         public const string ShpereType = "shpere";
+        public const string ShpereHeavyType = "shpereHeavy";
+        public const string ShpereHighType = "shpereHigh";
+        public const string ShpereMediumType = "shpereMedium";
+        public const string ShpereLowType = "shpereLow";
         public const string PlaneXYType = "planeXY";
         public const string PlaneXZType = "planeXZ";
         public const string PlaneYZType = "planeYZ";
 
         private MeshPool()
         {
-            _meshMap = new Dictionary<string, TgcMesh>(4);
+            _meshMap = new Dictionary<string, TgcMesh>(8);
             TgcScene scene = new TgcSceneLoader().loadSceneFromFile(
                 GuiController.Instance.AlumnoEjemplosMediaDir + "ModelosTgc\\Sphere\\" + "Sphere-TgcScene.xml",
                 GuiController.Instance.AlumnoEjemplosMediaDir + "ModelosTgc\\Sphere\\");
-            _meshMap.Add(ShpereType, scene.Meshes[0]);
+            TgcMesh mesh = scene.Meshes[0];
+            _meshMap.Add(ShpereType, mesh);
+            
+            //Reutilizo la mesh para crear otra con otro color.
+            scene = new TgcSceneLoader().loadSceneFromFile(
+                GuiController.Instance.AlumnoEjemplosMediaDir + "ModelosTgc\\Sphere\\" + "SphereHeavy-TgcScene.xml",
+                GuiController.Instance.AlumnoEjemplosMediaDir + "ModelosTgc\\Sphere\\");
+            mesh = scene.Meshes[0];            
+            _meshMap.Add(ShpereHeavyType, mesh);
 
+            //Reutilizo la mesh para crear otra con otro color.
+            scene = new TgcSceneLoader().loadSceneFromFile(
+                GuiController.Instance.AlumnoEjemplosMediaDir + "ModelosTgc\\Sphere\\" + "SphereHigh-TgcScene.xml",
+                GuiController.Instance.AlumnoEjemplosMediaDir + "ModelosTgc\\Sphere\\");
+            mesh = scene.Meshes[0];
+            _meshMap.Add(ShpereHighType, mesh);
+
+            //Reutilizo la mesh para crear otra con otro color.
+            scene = new TgcSceneLoader().loadSceneFromFile(
+                GuiController.Instance.AlumnoEjemplosMediaDir + "ModelosTgc\\Sphere\\" + "SphereMedium-TgcScene.xml",
+                GuiController.Instance.AlumnoEjemplosMediaDir + "ModelosTgc\\Sphere\\");
+            mesh = scene.Meshes[0];
+            _meshMap.Add(ShpereMediumType, mesh);
+
+            //Reutilizo la mesh para crear otra con otro color.
+            scene = new TgcSceneLoader().loadSceneFromFile(
+                GuiController.Instance.AlumnoEjemplosMediaDir + "ModelosTgc\\Sphere\\" + "SphereLow-TgcScene.xml",
+                GuiController.Instance.AlumnoEjemplosMediaDir + "ModelosTgc\\Sphere\\");
+            mesh = scene.Meshes[0];
+            //Color.DimGray;
+            _meshMap.Add(ShpereLowType, mesh);
+            
             //Modifier de textura
             string textureWallPath = GuiController.Instance.ExamplesMediaDir + "Texturas\\Quake\\TexturePack2\\brick1_1.jpg";
             TgcTexture currentTexture = TgcTexture.createTexture(GuiController.Instance.D3dDevice, textureWallPath);
