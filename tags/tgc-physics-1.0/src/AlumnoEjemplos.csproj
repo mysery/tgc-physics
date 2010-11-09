@@ -1,0 +1,146 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{659DA3D0-B324-45DF-83B0-7AE04280ADC1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AlumnoEjemplos</RootNamespace>
+    <AssemblyName>AlumnoEjemplos</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.03.91\Microsoft.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3D, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.03.91\Microsoft.DirectX.Direct3D.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3DX, Version=1.0.2903.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.03.91\Microsoft.DirectX.Direct3DX.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.DirectDraw, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.03.91\Microsoft.DirectX.DirectDraw.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.DirectInput, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.03.91\Microsoft.DirectX.DirectInput.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.DirectPlay, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.DirectX.DirectSound, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.03.91\Microsoft.DirectX.DirectSound.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Piguyis\Body\BodyBuilder.cs" />
+    <Compile Include="Piguyis\Body\MeshPool.cs" />
+    <Compile Include="Piguyis\Body\RigidBody.cs" />
+    <Compile Include="Piguyis\Box2DLitePort\Arbiter.cs" />
+    <Compile Include="Piguyis\Box2DLitePort\Contact.cs" />
+    <Compile Include="Piguyis\Box2DLitePort\World.cs" />
+    <Compile Include="Piguyis\Colisiones\BoundingNullObject.cs" />
+    <Compile Include="Piguyis\Colisiones\BoundingVolume.cs" />
+    <Compile Include="Piguyis\Colisiones\CollisionManager.cs" />
+    <Compile Include="Piguyis\Colisiones\BoundingPlane.cs" />
+    <Compile Include="Piguyis\Colisiones\SphereSphereResult.cs" />
+    <Compile Include="Piguyis\Colisiones\BoundingSphere.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena14.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena15.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena13.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena12.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena11.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena10.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena09.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena08.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena07.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena06.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena05.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena04.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena03.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena02.cs" />
+    <Compile Include="Piguyis\EjemploAlumnoEsena01.cs" />
+    <Compile Include="Piguyis\Esenas\Escena15.cs" />
+    <Compile Include="Piguyis\Esenas\Escena14.cs" />
+    <Compile Include="Piguyis\Esenas\Escena13.cs" />
+    <Compile Include="Piguyis\Esenas\Escena12.cs" />
+    <Compile Include="Piguyis\Esenas\Escena11.cs" />
+    <Compile Include="Piguyis\Esenas\Escena10.cs" />
+    <Compile Include="Piguyis\Esenas\Escena08.cs" />
+    <Compile Include="Piguyis\Esenas\Escena09.cs" />
+    <Compile Include="Piguyis\Esenas\Escena07.cs" />
+    <Compile Include="Piguyis\Esenas\Escena06.cs" />
+    <Compile Include="Piguyis\Esenas\Escena05.cs" />
+    <Compile Include="Piguyis\Esenas\Escena04.cs" />
+    <Compile Include="Piguyis\Esenas\Escena03.cs" />
+    <Compile Include="Piguyis\Esenas\Escena02.cs" />
+    <Compile Include="Piguyis\Esenas\Escena01.cs" />
+    <Compile Include="Piguyis\Esenas\EscenaBase.cs" />
+    <Compile Include="Piguyis\Estructuras\FibbonacciHeap.cs" />
+    <Compile Include="Piguyis\Estructuras\FibbonacciNode.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\FastSerialization.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\IOctree.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\Octree.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\OctreeBox.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\OctreeDistance.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\OctreeLeaf.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\OctreeNode.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\Point3d.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\Point3f.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\Vector3d.cs" />
+    <Compile Include="Piguyis\Estructuras\Octree\Vector3f.cs" />
+    <Compile Include="Piguyis\Estructuras\RNode.cs" />
+    <Compile Include="Piguyis\Estructuras\RPoint.cs" />
+    <Compile Include="Piguyis\Estructuras\RRectangle.cs" />
+    <Compile Include="Piguyis\Estructuras\RTree.cs" />
+    <Compile Include="Piguyis\Fisica\Fuerza.cs" />
+    <Compile Include="Piguyis\Esenas\IEscena.cs" />
+    <Compile Include="Piguyis\Matematica\FastMath.cs" />
+    <Compile Include="Piguyis\TGCView\TgcArrow.cs" />
+    <Compile Include="Piguyis\TGCView\TgcBoundingSphere.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TgcViewer\TgcViewer.csproj">
+      <Project>{990E714F-7FF2-4A87-86B1-E5FC8D4C2F4C}</Project>
+      <Name>TgcViewer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
